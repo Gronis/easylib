@@ -9,7 +9,7 @@
  */
 
 class API_KEYS{
-    public static $TMDB = 'API KEY HERE'; //Get it from https://www.themoviedb.org
+    public static $TMDB = 'bdac46af3d9e88f3b67af198b332ea1c'; //Get it from https://www.themoviedb.org
 }
 
 ?>

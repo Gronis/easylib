@@ -12,7 +12,7 @@ function help(){
     echo Constants::$HELP;
 }
 
-function scan(){
+function scan($param){
 
     echo "Using API key: " . API_KEYS::getTMDB() . "\n";
 
@@ -171,19 +171,22 @@ function scan(){
 
 }
 
-function setkey($key){
-    API_KEYS::setTMDB($key);
+function setkey($param){
+    API_KEYS::setTMDB($param[0]);
 }
 
-function getkey(){
+function getkey($param){
     echo API_KEYS::getTMDB() . "\n";
 }
 
 $func = $argv[1];
-$param1 = $argv[2];
+$param = array();
+for($i = 2; $argv[$i] != null; $i++){
+    array_push($param,$argv[$i]);
+}
 if($func == null){
     $func = 'help';
 }
-$func($param1);
+$func($param);
 
 

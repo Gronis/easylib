@@ -61,7 +61,7 @@ class Application {
 'Disturbia[2007]DvDrip[Eng]-aXXo',
 'Divergent (2014) 720p BluRay [G2G]',
 'Django Unchained (2012) [1080p]',
-'DOA.Dead.or.Alive.Swesub.Dvdrip.Xvid.BANANA',
+//'DOA.Dead.or.Alive.Swesub.Dvdrip.Xvid.BANANA',
 'Don.Jon.2013.720p.WEB-DL.DD5.1.h.264-fiend',
 'Doomsday.2008.NORDiC.PAL.DVDR',
 'Dragonball Evolution(2009)DVDrip[UKB-RG Xvid]-keltz',

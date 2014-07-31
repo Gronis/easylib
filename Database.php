@@ -57,7 +57,7 @@ class Database {
     function title($fileName){
         // As soon as any of these expressions does occur, skip the rest (Title has already been anounced in the filename)
         $title = $this->untilFirst(
-            '/(HDTV|bluray|\w{2,3}rip)|(x264|SWESUB|UNRATED|XViD)|(\w{0,3}SCR)|(SWE|avi|mkv|mp4|TS)|([^0-9]\d{4})|(\d{3,4}p)|(AC\d)|([^a-zA-Z0-9 \.\-]+)/i',
+            '/(HDTV|bluray|\w{2,3}rip)|(x264|SWESUB|UNRATED|XViD)|(\w{0,3}SCR)|(SWE|\.avi|\.mkv|\.mp4|DTS)|([^0-9]\d{4})|(\d{3,4}p)|(AC\d)|([^a-zA-Z0-9 \.\-\&]+)/i',
             $fileName);
         //Remove unnessesary chars
         return preg_replace('/\[|\]|\./', ' ', $title);

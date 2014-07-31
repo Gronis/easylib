@@ -11,7 +11,7 @@ use TMDB\Client;
 class Database {
     private $db;
     function __construct(){
-        $this->db = Client::getInstance(API_KEYS::$TMDB); //Get api key from API_KEYS
+        $this->db = Client::getInstance(API_KEYS::getTMDB()); //Get api key from API_KEYS
         $this->db->adult = true;  // return adult content
         $this->db->paged = false; // merges all paged results into a single result automatically
     }

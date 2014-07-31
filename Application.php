@@ -14,6 +14,8 @@ function help(){
 
 function scan(){
 
+    echo "Using API key: " . API_KEYS::getTMDB() . "\n";
+
     $list = array('10000 BC KLAXXON',
         '2012.2009.720p.BluRay.x264-METiS',
         '2 Guns (2013) [1080p]',
@@ -163,12 +165,25 @@ function scan(){
         $db->getMovies($movieName);
     }
 
+    function tmdbkey($key){
+
+    }
+
+}
+
+function setkey($key){
+    API_KEYS::setTMDB($key);
+}
+
+function getkey(){
+    echo API_KEYS::getTMDB() . "\n";
 }
 
 $func = $argv[1];
+$param1 = $argv[2];
 if($func == null){
     $func = 'help';
 }
-$func();
+$func($param1);
 
 

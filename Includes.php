@@ -8,7 +8,7 @@
 
 include_once('Application.php');
 include_once('Database.php');
-include_once('API_KEYS.php');
+include_once('Config.php');
 include_once('Constants.php');
 
 include_once('libs/tmdb-library/TMDB/Client.php');

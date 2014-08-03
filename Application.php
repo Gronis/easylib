@@ -9,12 +9,10 @@
 include_once('Includes.php');
 
 function help(){
-    echo Constants::$HELP;
+    echo Constants::$HELP_TEXT;
 }
 
 function scan(){
-
-    echo "Using API key: " . API_KEYS::getTMDB() . "\n";
 
     $list = array('10000 BC KLAXXON',
         '2012.2009.720p.BluRay.x264-METiS',
@@ -165,32 +163,38 @@ function scan(){
         $db->getMovies($movieName);
     }
 
-    function tmdbkey($key){
+}
 
+/**
+ * Get or sets a config parameter
+ * @param $param An array parameters.
+ * To set a config key, the array should have the format array[ {key=value} ]
+ * e.g. "TMDB=new_api_key"
+ *
+ * To get a config key, the array should have the format array[ {key} ]
+ *
+ * e.g. "TMDB"
+ */
+function config($param){
+    $config = getConfig();
+    for($i = 0; $i < count($param); $i++){
+        $p = $param[$i];
+        //is it a get method? (doesn't contains "=" sign)
+        $isGet = !preg_match('/.+\=.+/',$p);
+        if($isGet){
+            if(array_key_exists($p,$config)){
+                echo $config[$p] . "\n";
+            }
+        }else{
+            $splited = preg_split('/\=/',$p);
+            $field = $splited[0];
+            $value = $splited[count($splited) - 1];
+            if(array_key_exists($field,$config)){
+                $config[$field] = $value;
+            }
+        }
     }
-
+    setConfig($config);
 }
-
-function setkey($param){
-    API_KEYS::setTMDB($param[0]);
-}
-
-function getkey(){
-    echo API_KEYS::getTMDB() . "\n";
-}
-
-$func = $argv[1];
-
-//add parameters into new array
-$param = array();
-for($i = 2;$i < count($argv); $i++){
-    array_push($param,$argv[$i]);
-}
-
-//set function to help if no function is called
-if($func == null){
-    $func = 'help';
-}
-$func($param);
 
 

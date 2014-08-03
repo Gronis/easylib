@@ -1,4 +1,4 @@
-MovieLibrary
+easylib
 ============
 
 A simple server app that fetches media from a filesystem and creates a database that connects the media information with the file on the filesystem
@@ -17,13 +17,14 @@ Requirements:
 Setup:
 -----
 
-1. Run export TMDB_KEY={YOUR TMDB API KEY HERE} to set API-key
-2. Also run "chmod +x movielibrary" in order to run the CLI
+1. Run "chmod +x easylib" in order to run the CLI
+2. Set TMDB_KEY in config.ini or run ./easylib -config TMDB_KEY={YOUR TMDB API KEY HERE} to set API-key
 
-You should add a shortcut to movielibrary in your bin folder so you can access it from anywhere (this is optional)
+Optional
+3. "ln easylib /usr/bin/" To add a shortcut to easylib in your /usr/bin run folder so you can access it from anywhere (this is optional)
 
 Basic Usage:
 -----------
 
-run "movielibrary scan" to scan for movies
-run "movielibrary help" to get help
+run "easylib -scan" to scan for media
+run "easylib -help" to get help

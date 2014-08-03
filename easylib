@@ -41,7 +41,6 @@ function executeCommand(){
             if(preg_match($pattern, $argv[$x])){
                 //call function and reset when new flag is found
                 if($func != null){
-                    //call function
                     $func($param);
                     //reset
                     $func = null;

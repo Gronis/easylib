@@ -1,3 +1,5 @@
 *.css
 .idea
-libs/api_keys.php
+vendor
+composer.phar
+composer.lock

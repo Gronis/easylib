@@ -1,3 +1,0 @@
-[submodule "libs/tmdb-library"]
-	path = libs/tmdb-library
-	url = https://github.com/MediaDevils/tmdb-library.git

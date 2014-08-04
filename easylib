@@ -2,14 +2,9 @@
 <?php
 
 //include application commands
-include_once('Application.php');
+include_once('app/Application.php');
 
-loadConfig();
 executeCommand();
-
-function loadConfig(){
-    $config = null;
-}
 
 /**
  * execute easylib using flags to determine what to do

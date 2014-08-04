@@ -10,47 +10,27 @@ executeCommand();
  * execute easylib using flags to determine what to do
  *
  * for example
- * "easylib -scan" will scan
- * "easylib -scan -help" will scan and the print the help
- * "easylib -help -config TMDB_KEY" will print the help and the TMDB API_KEY
- * "easylib -config TMDB_KEY -help" will print the TMDB API KEY and the help
+ * "easylib scan" will scan
+ * "easylib scan help" will scan and the print the help
  */
 function executeCommand(){
     //get arguments
     $argv = $_SERVER['argv'];
     $totalArgv = count($argv);
 
-    //pattern for flags
-    $pattern = '/-(.+)/';
-    //parameters
-    $param = array();
-    //function
-    $func = null;
-
     //if any arguments execute them
     if( $totalArgv > 1 ){
-        //loop all and get the flags
-        for( $x = 1; $x < $totalArgv; $x++ )
-        {
-            //if next one is a flag
-            if(preg_match($pattern, $argv[$x])){
-                //call function and reset when new flag is found
-                if($func != null){
-                    $func($param);
-                    //reset
-                    $func = null;
-                    $param = array();
-                }
-                //get flag
-                $func = substr($argv[$x],1);
-
-            } else{
-                //if not plag, then parameter to current flag
-                array_push($param, trim($argv[$x]));
-            }
+        //first arg is function
+        $func = $argv[1];
+        //parameters
+        $param = array();
+        //loop all and get the parameters
+        for( $x = 2; $x < $totalArgv; $x++ ) {
+            //add params
+            array_push($param, trim($argv[$x]));
         }
-        //call last function if any
-        if($func != null) $func($param);
+        //execute func
+        $func($param);
     }else{
         help();
     }

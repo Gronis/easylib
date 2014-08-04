@@ -1,4 +1,5 @@
 <?php
+namespace Easylib;
 /**
  * Created by PhpStorm.
  * User: robin
@@ -11,7 +12,7 @@ use TMDB\Client;
 class Database {
     private $db;
     function __construct(){
-        $this->db = Client::getInstance(getConfig()[Constants::$TMDB_KEY]); //Get api key from API_KEYS
+        $this->db = Client::getInstance(Config::get()[Constants::$TMDB_KEY]);
         $this->db->adult = true;  // return adult content
         $this->db->paged = false; // merges all paged results into a single result automatically
     }

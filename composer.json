@@ -1,6 +1,6 @@
 {
     "name": "gronis/easylib",
-    "description": "A simple server app that fetches media from a filesystem and creates a database that connects the media information with the file on the filesystem",
+    "description": "A simple server src that fetches media from a filesystem and creates a database that connects the media information with the file on the filesystem",
     "license": "MIT",
     "authors": [
         {
@@ -12,5 +12,8 @@
     "require": {
 
         "mediadevils/tmdb-library": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {"Easylib\\": "src/"}
     }
 }

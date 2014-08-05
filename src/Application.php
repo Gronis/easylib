@@ -13,7 +13,7 @@ use Easylib\Database;
 
 class Application{
     public function help(){
-        echo Constants::$HELP_TEXT;
+        return Constants::$HELP_TEXT;
     }
 
     public function scan(){
@@ -180,6 +180,7 @@ class Application{
      * e.g. "TMDB"
      */
     public function config($param){
+        $result = "";
         $config = Config::get();
         for($i = 0; $i < count($param); $i++){
             $p = $param[$i];
@@ -187,7 +188,7 @@ class Application{
             $isGet = !preg_match('/.+\=.+/',$p);
             if($isGet){
                 if(array_key_exists($p,$config)){
-                    echo $config[$p] . "\n";
+                    $result = $config[$p] . "\n";
                 }
             }else{
                 $splited = preg_split('/\=/',$p);
@@ -199,6 +200,7 @@ class Application{
             }
         }
         Config::set($config);
+        return $result;
     }
 
 

@@ -2,7 +2,7 @@
 <?php
 
 //include application commands
-include_once('vendor/autoload.php');
+include_once(__DIR__ . '/vendor/autoload.php');
 
 use Easylib\Application;
 
@@ -33,9 +33,9 @@ function executeCommand(){
             array_push($param, trim($argv[$x]));
         }
         //execute func
-         $app->$func($param);
+         echo $app->$func($param);
     }else{
-        $app->help();
+        echo $app->help();
     }
 }
 ?>

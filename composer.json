@@ -10,7 +10,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-
         "mediadevils/tmdb-library": "1.0.*"
     },
     "autoload": {

@@ -8,7 +8,8 @@ namespace Easylib;
  */
 
 class Constants{
-    public static $TMDB_KEY = "TMDB_KEY";
+    public static $SCRAPER = "scraper";
+    public static $TMDB_KEY = "tmdb_key";
     public static $CONFIG_FILENAME = "config.ini";
     public static $HELP_TEXT =
 "Usage: easylib help => Print this help text

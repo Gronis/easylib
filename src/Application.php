@@ -16,21 +16,30 @@ class Application{
         return Constants::$HELP_TEXT;
     }
 
+    /**
+     * Scan for media
+     *
+     * This method will search the filesystem for media with formats (specified in the config file)
+     * and search them with the specified scraper (specified in config file).
+     *
+     * @param $param An array with paths where to search for media. Current path is used if no path is specified
+     *
+     */
     public function scan($param){
+
         $files = array();
         if(count($param) > 0){
             foreach($param as $path){
-                $files = array_merge($files,Filesystem::search($path,Config::get()[Constants::$FORMATS]));
+                $files = array_merge($files,Filesystem::search($path));
             }
         }else{
-            $files = Filesystem::search('.',Config::get()[Constants::$FORMATS]);
+            $files = Filesystem::search('.');
         }
 
         $db = new Database();
         foreach($files as $file){
             $db->getMovies($file);
         }
-
         //print_r($files);
 
     }
@@ -39,11 +48,11 @@ class Application{
      * Get or sets a config parameter
      * @param $param An array parameters.
      * To set a config key, the array should have the format array[ {key=value} ]
-     * e.g. "TMDB=new_api_key"
+     * e.g. "tmdb=new_api_key"
      *
      * To get a config key, the array should have the format array[ {key} ]
      *
-     * e.g. "TMDB"
+     * e.g. "tmdb"
      */
     public function config($param){
         $result = "";

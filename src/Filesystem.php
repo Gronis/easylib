@@ -18,12 +18,15 @@ class Filesystem {
      * in the file hierarchy.
      * @return array An array which contains an array of strings where all the files are located.
      */
-    public static function search($dir = '.', $formats = '/.*/', $recursive = true){
+    public static function search($dir = '.', $formats = null, $recursive = true){
+        if($formats == null){
+            $formats = Config::get()[Constants::$FORMATS];
+        }
         $dir = rtrim($dir, '/');
         return Filesystem::search_req($dir,$formats,$recursive);
     }
 
-    public static function search_req($dir = '.', $formats = '/.*/', $recursive = true){
+    public static function search_req($dir, $formats, $recursive = true){
         // remove up dirs
         $scanned_dir = array_diff(scandir($dir), array('..', '.'));
         $result = array();

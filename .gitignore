@@ -1,5 +1,6 @@
 *.css
 .idea
 vendor
+test
 composer.phar
 composer.lock

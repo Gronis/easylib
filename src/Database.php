@@ -21,11 +21,12 @@ class Database {
      * Get a list of movies from library backend that matches the fileName
      * @param $fileName
      */
-    function getMovies($fileName){
-        $title = $this->title($fileName);
-        $year = $this->year($fileName);
+    function getMovies($fullFilename){
+        $filename = $this->removeLocation($fullFilename);
+        $title = $this->title($filename);
+        $year = $this->year($filename);
         echo '--------------------------------'. "\n";
-        echo 'Filename: ' . $fileName . "\n";
+        echo 'Filename: ' . $fullFilename . "\n";
         echo 'Search: ' . $title  . " Year: " . $year . "\n\n";
 
         //If year is found
@@ -40,6 +41,12 @@ class Database {
         $movie = reset($results);
         return $results;
     }
+
+    private function removeLocation($filename){
+        $splitted = preg_split('/\//',$filename);
+        return $splitted[count($splitted) - 1];
+    }
+
 
     /**
      * Returns the text to the point where linebreak or something in the regex is found.

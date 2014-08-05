@@ -23,11 +23,11 @@ class Config{
         //get lines from file (split on break line)
         $lines = preg_split('/\n/',file_get_contents(Constants::$CONFIG_FILENAME));
         //replace all changed configs.
-        foreach(array_keys($array) as $key){
-            foreach(array_keys($lines) as $lineNr){
-               if(preg_match('/.*'. $key . '.+/',$lines[$lineNr]) &&
-                 !preg_match('/.*;.+/i',$lines[$lineNr])){
-                    $lines[$lineNr] = $key . " = " . $array[$key];
+        foreach($array as $key => $value){
+            foreach($lines as $lineNr => $line){
+               if(preg_match('/.*'. $key . '.+/',$line) &&
+                 !preg_match('/.*;.+/i',$line)){
+                    $lines[$lineNr] = $key . " = " . (is_string($value)? '\'' : "") . $value . (is_string($value)? '\'' : "");
                     break;
                 }
             }

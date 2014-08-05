@@ -20,10 +20,10 @@ Setup:
 
 Optional:
 
-5. Run "ln easylib /usr/bin/" To add a shortcut to easylib in your /usr/bin folder so you can access it from anywhere (this is optional)
+5. Add a shortcut to easylib in your /usr/bin folder with "ln" so you can access it from anywhere (this is optional)
 
 Basic Usage:
 -----------
 
-run "easylib -scan" to scan for media
+run "easylib -scan" {path/to/scan} to scan for media
 run "easylib -help" to get help

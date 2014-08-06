@@ -9,6 +9,7 @@ namespace Easylib;
 
 class Constants{
     public static $SCRAPER = "scraper";
+    public static $TMDB = "tmdb";
     public static $TMDB_KEY = "tmdb_key";
     public static $FORMATS = "formats";
     public static $CONFIG_FILENAME = "config.ini";

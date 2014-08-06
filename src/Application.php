@@ -9,7 +9,7 @@ namespace Easylib;
 
 use Easylib\Constants;
 use Easylib\Config;
-use Easylib\Database;
+use Easylib\Scraper;
 
 class Application{
     public function help(){
@@ -28,20 +28,25 @@ class Application{
     public function scan($param){
 
         $files = array();
+
         if(count($param) > 0){
             foreach($param as $path){
                 $files = array_merge($files,Filesystem::search($path));
             }
         }else{
-            $files = Filesystem::search('.');
+            $files = Filesystem::search();
         }
 
-        $db = new Database();
+        switch(Config::get()[Constants::$SCRAPER]){
+            case Constants::$TMDB:
+                $scraper = new TMDB_Scraper();
+                break;
+            default:
+                return 'Cannot read scraper from config file';
+        }
         foreach($files as $file){
-            $db->getMovies($file);
+            $scraper->getMovies($file);
         }
-        //print_r($files);
-
     }
 
     /**

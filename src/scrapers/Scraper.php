@@ -1,5 +1,5 @@
 <?php
-namespace Easylib;
+namespace Easylib\scrapers;
 /**
  * Created by PhpStorm.
  * User: robin
@@ -7,6 +7,8 @@ namespace Easylib;
  * Time: 17:54
  */
 
+use Easylib\util\Config;
+use Easylib\util\Constants;
 /**
  * Class Scraper
  *
@@ -16,13 +18,28 @@ namespace Easylib;
  * @package Easylib
  */
 abstract class Scraper {
+
+    public static function get(){
+        switch(Config::get()[Constants::$SCRAPER]){
+            case Constants::$TMDB:
+                return new TMDB_Scraper();
+                break;
+            default:
+                return null;
+        }
+    }
     /**
-     * Get a list of movies from library backend that matches the fileName
+     * Get a movie from the library backend that matches the fileName
      * @param $fullFilename The filename starting from root e.g /home/user/Sentinel.mp4
      */
-    public abstract function getMovies($fullFilename);
+    public abstract function get_movie($fullFilename);
 
-    protected function shortPath($filename){
+    /**
+     * Removes path in the front if any
+     * @param $filename
+     * @return mixed
+     */
+    protected function only_file($filename){
         $splitted = preg_split('/\//',$filename);
         return $splitted[count($splitted) - 1];
     }

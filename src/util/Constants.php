@@ -1,5 +1,5 @@
 <?php
-namespace Easylib;
+namespace Easylib\util;
 /**
  * Created by PhpStorm.
  * User: robin

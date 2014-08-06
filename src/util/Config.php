@@ -1,5 +1,5 @@
 <?php
-namespace Easylib;
+namespace Easylib\util;
 /**
  * Created by PhpStorm.
  * User: robin
@@ -15,7 +15,7 @@ class Config{
         error_reporting(E_ALL);
 
         /*** parse the ini file ***/
-        return parse_ini_file(__DIR__ . "/../" . Constants::$CONFIG_FILENAME, 1);
+        return parse_ini_file(__DIR__ . "/../../" . Constants::$CONFIG_FILENAME, 1);
     }
 
     public static function set($array)
@@ -33,7 +33,7 @@ class Config{
             }
         }
         //save line as config and separate each line with EOL sign
-        file_put_contents(__DIR__ . "/../" . Constants::$CONFIG_FILENAME, implode(PHP_EOL,$lines));
+        file_put_contents(__DIR__ . "/../../" . Constants::$CONFIG_FILENAME, implode(PHP_EOL,$lines));
     }
 }
 

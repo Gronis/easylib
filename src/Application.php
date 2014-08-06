@@ -7,9 +7,10 @@ namespace Easylib;
  * Time: 17:59
  */
 
-use Easylib\Constants;
-use Easylib\Config;
-use Easylib\Scraper;
+use Easylib\scrapers\Scraper;
+use Easylib\util\Config;
+use Easylib\util\Constants;
+use Easylib\util\Filesystem;
 
 class Application{
     public function help(){
@@ -37,15 +38,10 @@ class Application{
             $files = Filesystem::search();
         }
 
-        switch(Config::get()[Constants::$SCRAPER]){
-            case Constants::$TMDB:
-                $scraper = new TMDB_Scraper();
-                break;
-            default:
-                return 'Cannot read scraper from config file';
-        }
+        $scraper = Scraper::get();
+
         foreach($files as $file){
-            $scraper->getMovies($file);
+            $scraper->get_movie($file);
         }
     }
 

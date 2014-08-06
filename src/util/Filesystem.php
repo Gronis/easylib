@@ -6,7 +6,7 @@
  * Time: 21:38
  */
 
-namespace Easylib;
+namespace Easylib\util;
 
 
 class Filesystem {

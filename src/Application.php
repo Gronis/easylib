@@ -41,7 +41,7 @@ class Application{
         $scraper = Scraper::get();
 
         foreach($files as $file){
-            $scraper->get_movie($file);
+            $scraper->search_movie($file);
         }
     }
 

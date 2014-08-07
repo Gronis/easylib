@@ -9,6 +9,7 @@ namespace Easylib\scrapers;
 
 use Easylib\util\Config;
 use Easylib\util\Constants;
+use Easylib\model\Movie;
 /**
  * Class Scraper
  *
@@ -30,18 +31,54 @@ abstract class Scraper {
     }
     /**
      * Get a movie from the library backend that matches the fileName
-     * @param $fullFilename The filename starting from root e.g /home/user/Sentinel.mp4
+     * @param $full_filename The filename starting from root e.g /home/user/Sentinel.mp4
      */
-    public abstract function get_movie($fullFilename);
+    public function search_movie($full_filename){
+        if($this->valid($full_filename)){
+            $filename = $this->file($full_filename);
+            $folder = $this->folder($full_filename);
+            $result = $this->search_movie_inner($full_filename,$filename);
+
+            if(is_null($result)){
+                $result =  $this->search_movie_inner($full_filename,$folder);
+            }
+            print_r($result);
+            return $result;
+        }
+    }
+
+    private function search_movie_inner($full_filename, $search){
+        $title = $this->title($search);
+        $year = $this->year($search);
+
+        echo "\n" . '--------------------------------'. "\n";
+        echo 'Filename: ' . $full_filename . "\n";
+        echo 'Search: ' . $title  . " Year: " . $year . "\n";
+
+        return $this->search_movie_dependent($full_filename, $title,$year);
+
+    }
+
+    public abstract function search_movie_dependent($full_filename, $title, $year = 'Unknown');
 
     /**
      * Removes path in the front if any
      * @param $filename
      * @return mixed
      */
-    protected function only_file($filename){
+    protected function file($filename){
         $splitted = preg_split('/\//',$filename);
         return $splitted[count($splitted) - 1];
+    }
+
+    /**
+     * Removes path in the front if any
+     * @param $filename
+     * @return mixed
+     */
+    protected function folder($filename){
+        $splitted = preg_split('/\//',$filename);
+        return $splitted[count($splitted) - 2];
     }
 
     protected function valid($filename){

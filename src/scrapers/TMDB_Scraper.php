@@ -25,6 +25,7 @@ class TMDB_Scraper extends Scraper{
     }
 
     public function search_movie_dependent($full_filename, $title, $year = "Unknown"){
+
         //If year is found
         if ($year != 'Unknown'){
             $results = $this->db->search('movie', array('query'=>$title, 'year'=>$year));
@@ -53,6 +54,11 @@ class TMDB_Scraper extends Scraper{
                 $crew[$person->id] = $person->name;
             }
 
+            $keywords = array();
+            foreach($result->keywords()->keywords as $keyword){
+                $keywords[$keyword->id] = $keyword->name;
+            }
+
             $trailer = '';
             foreach($result->trailers()->youtube as $clip){
                 if($clip->type == 'Trailer'){
@@ -61,9 +67,12 @@ class TMDB_Scraper extends Scraper{
                 }
             }
 
+
+
             $movie = new Movie();
 
-            $movie->id = $info->imdb_id;
+            $movie->id = $info->id;
+            $movie->imdb_id = $info->imdb_id;
             $movie->title = $info->title;
             $movie->overview = $info->overview;
             $movie->runtime = $info->runtime;
@@ -71,6 +80,7 @@ class TMDB_Scraper extends Scraper{
             $movie->release_date = $info->release_date;
             $movie->cast = $cast;
             $movie->crew = $crew;
+            $movie->tags = $keywords;
             $movie->rating = $info->vote_average;
             $movie->votes = $info->vote_count;
             $movie->trailer = $trailer;

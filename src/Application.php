@@ -7,6 +7,7 @@ namespace Easylib;
  * Time: 17:59
  */
 
+use Easylib\model\Library;
 use Easylib\scrapers\Scraper;
 use Easylib\util\Config;
 use Easylib\util\Constants;
@@ -38,11 +39,26 @@ class Application{
             $files = Filesystem::search();
         }
 
+        $lib = new Library();
         $scraper = Scraper::get();
 
         foreach($files as $file){
-            $scraper->search_movie($file);
+            $movie = $scraper->search_movie($file);
+            if($movie != null){
+                print_r($movie);
+                $lib->movies[$movie->id] = $movie;
+            }
         }
+        $lib->save();
+
+    }
+
+    public function search($param){
+        if(count($param) < 1) return;
+        //implode arguments with regex or sign
+        $match_values = '/' .implode('|',$param) . '/i';
+        $lib = Library::load();
+        return $lib->search($match_values);
     }
 
     /**

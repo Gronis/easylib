@@ -33,7 +33,7 @@ function executeCommand(){
             array_push($param, trim($argv[$x]));
         }
         //execute func
-         echo $app->$func($param);
+         print_r($app->$func($param));
     }else{
         echo $app->help();
     }

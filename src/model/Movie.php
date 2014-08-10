@@ -4,6 +4,7 @@ namespace Easylib\model;
 class Movie{
 
     public $id;
+    public $imdb_id;
     public $title;
     public $overview;
     public $runtime;
@@ -11,6 +12,7 @@ class Movie{
     public $release_date;
     public $cast;
     public $crew;
+    public $tags;
     public $rating;
     public $votes;
     public $trailer;
@@ -18,9 +20,5 @@ class Movie{
     public $poster_medium_url;
     public $poster_large_url;
     public $file_path;
-
-    public function toJSON(){
-        return json_encode($this);
-    }
 
 }

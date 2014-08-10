@@ -25,5 +25,5 @@ Optional:
 Basic Usage:
 -----------
 
-run "easylib -scan" {path/to/scan} to scan for media
-run "easylib -help" to get help
+run "easylib scan" {path/to/scan} to scan for media
+run "easylib help" to get help

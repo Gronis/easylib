@@ -31,7 +31,7 @@ class Library {
      * @return Library - A new library with only the search result
      */
     public function search($match_values, $reject_values = '/^.]/', $match_keys = '/./',
-            $reject_keys = '/^(poster)|(trailer)|(file_path)|(overview)|(crew)|(cast)/i'){
+            $reject_keys = '/(poster)|(trailer)|(file_path)|(overview)|(crew)|(cast)/i'){
         $lib = new Library();
 
         foreach($this->movies as $id => $movie){
@@ -50,15 +50,15 @@ class Library {
      * @param $reject_values regex for values to reject.
      * @param $match_keys regex for keys to match.
      * @param $reject_keys regex for keys to reject.
-     * @param $key key of the current
-     * @param $value
-     * @return null
+     * @param $key key of the current element
+     * @param $value value of the current element
+     * @return the relevance of the result or null if not relevant (doesn't match)
      */
     private function search_inner($match_values, $reject_values, $match_keys, $reject_keys, $key, $value){
-        //if is array or object, continue to search
-        if(is_array($value) || is_object($value)){
-            //continue only if key matches conditions
-            if(!preg_match($reject_keys, $key) && preg_match($match_keys, $key)){
+        //continue only if key matches conditions
+        if(!preg_match($reject_keys, $key) && preg_match($match_keys, $key)){
+            //if is array or object, continue to search
+            if(is_array($value) || is_object($value)){
                 foreach($value as $inner_key => $inner_value){
                     $relevance = $this->search_inner($match_values, $reject_values, $match_keys, $reject_keys,
                         $inner_key, $inner_value);
@@ -66,12 +66,12 @@ class Library {
                         return $relevance;
                     }
                 }
-            }
-        } else{
-            if( preg_match($match_values, $value,$relevance) && !preg_match($reject_values, $value) ){
-                return $this->search_relevance($relevance[0],$value);
-            }
+            } else{
+                if( preg_match($match_values, $value,$relevance) && !preg_match($reject_values, $value) ){
+                    return $this->search_relevance($relevance[0],$value);
+                }
 
+            }
         }
         return null;
     }

@@ -1,5 +1,8 @@
 <?php
 namespace Easylib;
+
+include_once(__DIR__ . '/../vendor/autoload.php');
+
 /**
  * Created by PhpStorm.
  * User: robin

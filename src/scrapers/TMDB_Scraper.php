@@ -85,8 +85,8 @@ class TMDB_Scraper extends Scraper{
             $movie->votes = $info->vote_count;
             $movie->trailer = $trailer;
             $movie->poster_small_url = $this->db->image_url('poster','w185',$result->poster_path);
-            $movie->poster_medium_url = $this->db->image_url('poster','w500',$result->poster_path);
-            $movie->poster_large_url = $this->db->image_url('poster','original',$result->poster_path);
+            $movie->poster_medium_url = $this->db->image_url('poster','w342',$result->poster_path);
+            $movie->poster_large_url = $this->db->image_url('poster','w500',$result->poster_path);
             $movie->file_path = $full_filename;
 
             //print_r($movie);

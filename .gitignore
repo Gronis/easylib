@@ -1,5 +1,8 @@
+.DS_Store
 .idea
 vendor
 test
 composer.phar
 composer.lock
+library.json
+web/library

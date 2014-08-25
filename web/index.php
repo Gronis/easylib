@@ -53,6 +53,8 @@
         <script src="js/mustache.js"></script>
         <!-- Masonry, tile cards-->
         <script src="js/masonry.min.js"></script>
+        <!-- Infinite scroll -->
+        <script src="js/jquery.infinitescroll.min.js"></script>
         <!-- my own javascript-->
         <script src="js/app.js"></script>
 
@@ -63,7 +65,8 @@
                 <div class=card-info>
                     <div class='card-title'>
                         <!--movie name-->
-                        <h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>
+                        <!--<h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>-->
+                        <h4><a href={{file_path}}>{{title}}</a></h4>
                         <!--release year-->
                         <h5>{{release_date}}</h5>
                     </div>

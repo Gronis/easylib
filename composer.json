@@ -1,6 +1,6 @@
 {
     "name": "gronis/easylib",
-    "description": "A simple server src that fetches media from a filesystem and creates a database that connects the media information with the file on the filesystem",
+    "description": "A simple server src that fetches media from a filesystem and creates a library that connects the media information with the file on the filesystem",
     "license": "MIT",
     "authors": [
         {

@@ -1,6 +1,8 @@
 /**
  * Created by robin on 20/08/14.
  */
+var last_search;
+
 $( document ).ready(function() {
     console.log( "ready!" );
 
@@ -17,6 +19,7 @@ function init_autohide_navbar(){
 
 function init_masonry(){
     var container = document.querySelector('#content');
+
     var masonry = new Masonry(container, {
         columnWidth: 10,
         itemSelector: '.card',
@@ -35,6 +38,9 @@ function init_masonry(){
 function search(search){
     console.log(search);
 
+    var this_search = new Date().getTime();
+    last_search = this_search;
+
     //ajax request to for the search:
     $.ajax({
         url: "get.php?search=" + search/*,
@@ -42,17 +48,19 @@ function search(search){
             xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
         }*/}).done(function( data ) {
         if ( console && console.log ) {
-            var lib = JSON.parse(data);
-            var movies = [];
-            var html = "";
+            if(last_search == this_search){
+                var lib = JSON.parse(data);
+                var movies = [];
+                var html = "";
 
-            //get movies
-            for(var movie in lib.movies){
-                movies.push([movie, lib.movies[movie]]);
-                html += movie_to_html(lib.movies[movie]);
+                //get movies
+                for(var movie in lib.movies){
+                    movies.push([movie, lib.movies[movie]]);
+                    html += movie_to_html(lib.movies[movie]);
+                }
+                $("div#content").html(html);
+                init_masonry();
             }
-            $("div#content").html(html);
-            init_masonry();
         }
     });
 }

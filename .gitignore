@@ -5,4 +5,4 @@ test
 composer.phar
 composer.lock
 library.json
-web/library
+web/library/

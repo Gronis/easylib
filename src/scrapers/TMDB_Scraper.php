@@ -37,9 +37,13 @@ class TMDB_Scraper extends Scraper{
 
             //create link
             $file_link = "library/" . $this->file($full_filename);
+            if(!file_exists(__DIR__ ."/../../web/library")){
+                mkdir(__DIR__ ."/../../web/library");
+            }
             if(file_exists(__DIR__ ."/../../web/" . $file_link)){
                 unlink(__DIR__ ."/../../web/" . $file_link);
             }
+            print(__DIR__ ."/../../web/" . $file_link);
             symlink($full_filename, __DIR__ ."/../../web/" . $file_link);
 
             //fetch info form TMDB

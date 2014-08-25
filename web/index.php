@@ -59,14 +59,14 @@
         <script src="js/app.js"></script>
 
         <!-- Templates-->
-        <script id="movie-template" type="text/template">
+        <script id="movie-card-template" type="text/template">
             <div class='card'>
                 <img class='card-poster' src={{poster_medium_url}} />
                 <div class=card-info>
                     <div class='card-title'>
                         <!--movie name-->
                         <!--<h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>-->
-                        <h4><a href={{file_path}}>{{title}}</a></h4>
+                        <h4><a href="#" onclick="play_movie('{{file_path}}')">{{title}}</a></h4>
                         <!--release year-->
                         <h5>{{release_date}}</h5>
                     </div>
@@ -79,6 +79,14 @@
                     <p>{{overview}}</p>
                     </div> <!--card-info-->
                 <div class='horisontal-line'></div>
+            </div>
+        </script>
+
+        <script id="movie-player-template" type="text/template">
+            <div id="media_player">
+                <video controls="" autoplay="" name="media">
+                    <source src="{{file_path}}" type="video/webm">
+                </video>
             </div>
         </script>
 

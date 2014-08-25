@@ -65,8 +65,15 @@ function search(search){
     });
 }
 
+function play_movie(file_path){
+    var movie = {"file_path": file_path};
+    var template = $('#movie-player-template').html();
+    var html = Mustache.to_html(template, movie);
+    $("div#content").html(html);
+}
+
 function movie_to_html(movie){
-    var template = $('#movie-template').html();
+    var template = $('#movie-card-template').html();
     var html = Mustache.to_html(template, movie);
     return html;
 }

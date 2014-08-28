@@ -35,7 +35,6 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $video_codec = 'libx264';
     $audio_codec = 'libmp3lame';
-    $bitrate_video = '1500k';
 
     if($is_h264){
         $video_codec = 'copy';
@@ -48,7 +47,6 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $param[] = "-i '$input'";
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
-    $param[] = '-b:v ' . $bitrate_video;
     $param[] = '-preset ultrafast';
     $param[] = "-movflags +faststart";
     $param[] = "-tune fastdecode";
@@ -56,7 +54,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $param[] = "$protocol://$server:$port/$feed";
 
     $params = implode(" ",$param);
-    $cmd = "$ffserver -f $ffserver_config & $ffmpeg $params & $daemon";
+    $cmd = "$ffserver -f $ffserver_config & $daemon & $ffmpeg $params";
 
     echo $cmd;
     echo shell_exec($cmd);

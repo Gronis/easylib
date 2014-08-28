@@ -38,6 +38,7 @@
         </div>
 
         <div class="footer">
+
             <p class="center">
                 <a href="http://github.com/Gronis/easylib">easylib</a>
             </p>
@@ -53,8 +54,6 @@
         <script src="js/mustache.js"></script>
         <!-- Masonry, tile cards-->
         <script src="js/masonry.min.js"></script>
-        <!-- Infinite scroll -->
-        <script src="js/jquery.infinitescroll.min.js"></script>
         <!-- my own javascript-->
         <script src="js/app.js"></script>
 
@@ -66,7 +65,7 @@
                     <div class='card-title'>
                         <!--movie name-->
                         <!--<h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>-->
-                        <h4><a href="#" onclick="play_movie('{{file_path}}')">{{title}}</a></h4>
+                        <h4><a href="#" onclick="start_stream('{{file_path}}')">{{title}}</a></h4>
                         <!--release year-->
                         <h5>{{release_date}}</h5>
                     </div>
@@ -84,8 +83,7 @@
 
         <script id="movie-player-template" type="text/template">
             <div id="media_player">
-                <video controls="" autoplay="" name="media">
-                    <source src="{{file_path}}" type="video/webm">
+                <video autoplay="autoplay" name="media" src="{{source}}?buffer=5">
                 </video>
             </div>
         </script>

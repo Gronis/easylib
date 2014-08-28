@@ -35,7 +35,7 @@ class TMDB_Scraper extends Scraper{
         foreach($results as $result){
             echo 'Found: ' . $result->title . "\n";
 
-            //create link
+            /*/create link
             $file_link = "library/" . $this->file($full_filename);
             if(!file_exists(__DIR__ ."/../../web/library")){
                 mkdir(__DIR__ ."/../../web/library");
@@ -44,7 +44,7 @@ class TMDB_Scraper extends Scraper{
                 unlink(__DIR__ ."/../../web/" . $file_link);
             }
             print(__DIR__ ."/../../web/" . $file_link);
-            symlink($full_filename, __DIR__ ."/../../web/" . $file_link);
+            symlink($full_filename, __DIR__ ."/../../web/" . $file_link);*/
 
             //fetch info form TMDB
             $info = $this->db->info('movie', $result->id);
@@ -98,7 +98,7 @@ class TMDB_Scraper extends Scraper{
             $movie->poster_small_url = $this->db->image_url('poster','w185',$result->poster_path);
             $movie->poster_medium_url = $this->db->image_url('poster','w342',$result->poster_path);
             $movie->poster_large_url = $this->db->image_url('poster','w500',$result->poster_path);
-            $movie->file_path = $file_link;
+            $movie->file_path = $full_filename; //$file_link; <-- used in case link was nessesary
 
             //print_r($movie);
 

@@ -83,10 +83,9 @@
 
         <script id="movie-player-template" type="text/template">
             <div id="media_player">
-                <video preload="auto" autoplay="autoplay" name="media" src="{{source}}?buffer=5">
+                <video preload="auto" autoplay="autoplay" name="media" poster="temp/poster.png">
                 </video>
             </div>
-            <button onclick="play('{{source}}','{{file_path}}',0)">Reload player</button>
         </script>
 
     </body>

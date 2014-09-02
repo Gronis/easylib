@@ -11,7 +11,6 @@ include_once(__DIR__ . '/../vendor/autoload.php');
  */
 if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     exec('pkill ffmpeg');
-    //exec('pkill ffserver');
 
     $config = \Easylib\util\Config::get();
 
@@ -19,6 +18,8 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $ffmpeg = $config["ffmpeg"];
     $ffprobe = $config["ffprobe"];
     $daemon = "php daemon.php";
+    $logfile = "temp/logfile";
+    $pidfile = "temp/pidfile";
 
     $input = $_GET['i'];
     $feed = $_GET['f'];
@@ -31,7 +32,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $ffserver_config = "config/ffserver.conf";
     $override_ffserver = true;
-    $time = '00:00:00';
+    $video_time = '00:00:00';
 
     $video_codec = 'libx264';
     $audio_codec = 'libmp3lame';
@@ -43,7 +44,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $param = array('-y','-re');
     if($override_ffserver) $param[] = '-override_ffserver';
-    $param[] = '-ss ' . $time;
+    $param[] = '-ss ' . $video_time;
     $param[] = "-i '$input'";
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
@@ -55,12 +56,35 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $param[] = "$protocol://$server:$port/$feed";
 
     $params = implode(" ",$param);
-    $cmd = "$ffserver -f $ffserver_config & $daemon & $ffmpeg $params";
 
-    echo $cmd;
-    echo shell_exec($cmd);
+    exec_background("$ffserver -f $ffserver_config");
+    sleep(0.1);
+    exec_background("$ffmpeg $params", $logfile, $pidfile);
+
+    //wait for 2 seconds or error to return ajax request
+    while(!preg_match("/(time=00:00:02)|(Conversion failed)/i",file_get_contents($logfile)));
+
+    echo file_get_contents($logfile);
+
+    exec_background($daemon);
 
 }else{
     exec('pkill ffmpeg');
-    exec('pkill ffserver');
+    //exec('pkill ffserver');
+}
+
+function exec_background($cmd, $logfile = "/dev/null", $pidfile = "/dev/null"){
+    //exec("$cmd > /dev/null 2>/dev/null &");
+    exec(sprintf("%s > %s 2>&1 & echo $! >> %s", $cmd, $logfile, $pidfile));
+}
+
+function isRunning($pid){
+    try{
+        $result = shell_exec(sprintf("ps %d", $pid));
+        if( count(preg_split("/\n/", $result)) > 2){
+            return true;
+        }
+    }catch(Exception $e){}
+
+    return false;
 }

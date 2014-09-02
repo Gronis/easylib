@@ -11,6 +11,9 @@ run();
 function run(){
 
     $last_check = false;
+
+
+
     while(true){
         sleep(10);
 
@@ -32,6 +35,10 @@ function get_html($url){
     $html = curl_exec($ch);
     curl_close($ch);
     return $html;
+}
+
+function is_streaming($html, $stream){
+    return preg_match("/($stream)/i",$html);
 }
 
 function get_bitrate($html){

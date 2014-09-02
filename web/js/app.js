@@ -71,24 +71,16 @@ function search(search){
     });
 }
 
-function play(source, path, times){
-    times++;
-    var video = document.getElementsByTagName('video')[0];
-    /*if(video != undefined && video.readyState != "HAVE_NOTHING"){
-        movie_time = video.currentTime;
-        console.log(movie_time);
-        video.src = source;
-        return;
-    }*/
-    console.log("Playing: " + source);
-    var movie = {"source": source, "file_path": path};
+function create_videoplayer(source, path){
+    video = $("video")[0];
 
     if(video == undefined){
+        console.log("creating player: " + source);
         var template = $('#movie-player-template').html();
-        var html = Mustache.to_html(template, movie);
+        var html = Mustache.to_html(template);
         $("div#content").html(html);
 
-        video = document.getElementsByTagName('video')[0];
+        video = $("video")[0];
 
         video.addEventListener('waiting', function() {
             console.log('waiting');
@@ -100,38 +92,22 @@ function play(source, path, times){
         });
 
         video.addEventListener("error",function () {
-            console.log('error');
             window.setTimeout(function(){
-                if(times >= 7){
-                    console.log("error 7 times, restarting stream");
-                    start_stream(path);
-                }else{
-                    console.log("error, reloading " + times);
-                    play(source, path, times);
+                if(!video.src != null && video.src != "http://localhost/null"){
+                    console.log("error, restarting stream "+ video.src);
+                    start_stream(path)
                 }
             }, 1000);
         });
 
-    }else{
-        video.src = source;
     }
 
-/*
-    window.setTimeout(function(){
-        if(video.error){
-            if(times >= 7){
-                console.log("error 7 times, restarting stream");
-                start_stream(path);
-            }else{
-                console.log("error, reloading " + times);
-                play(source, path, times);
-            }
-        }
+}
 
-    }, 1000);
-
-*/
-
+function play(source){
+    var video = document.getElementsByTagName('video')[0];
+    video.src = source + "?buffer=5";
+    console.log("Playing: " + video.src);
 }
 
 function movie_to_html(movie){
@@ -144,22 +120,36 @@ function start_stream(path){
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
-    var ajax_url = "stream.php?i=" + path + "&f=" + feed;
+    var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed;
+    var poster_ajax_url = "poster.php?i=" + path;
 
-    console.log("starting stream: " + ajax_url);
-
+    console.log("starting stream: " + stream_ajax_url);
     $.ajax({
-        url: ajax_url
+        url: stream_ajax_url
     }).done(function( data ) {
-        //this is when the file is done i think
+        console.log("stream started on server side");
+        play(stream_url);
     });
 
-    play(stream_url, path, 0);
+    console.log("generationg poster: " + stream_ajax_url);
+    $.ajax({
+        url: poster_ajax_url
+    }).done(function( data ) {
+        console.log("poster generated");
+        create_videoplayer(stream_url, path);
+    });
+
 
     return stream_url;
 }
 
 function stop_stream(){
+    var video = document.getElementsByTagName('video')[0];
+    if(video != undefined){
+        video.pause();
+        video.src = null;
+    }
+
     $.ajax({
         url: "stream.php"
     }).done(function( data ) {

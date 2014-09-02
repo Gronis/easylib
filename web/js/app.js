@@ -81,23 +81,42 @@ function play(source, path, times){
         return;
     }*/
     console.log("Playing: " + source);
-    var movie = {"source": source};
-    var template = $('#movie-player-template').html();
-    var html = Mustache.to_html(template, movie);
-    $("div#content").html(html);
+    var movie = {"source": source, "file_path": path};
 
-    video = document.getElementsByTagName('video')[0];
+    if(video == undefined){
+        var template = $('#movie-player-template').html();
+        var html = Mustache.to_html(template, movie);
+        $("div#content").html(html);
 
-    video.addEventListener('waiting', function() {
-        console.log('waiting');
-    }, false);
+        video = document.getElementsByTagName('video')[0];
 
-    video.addEventListener('loadedmetadata', function () {
+        video.addEventListener('waiting', function() {
+            console.log('waiting');
+        }, false);
 
-        video.currentTime = movie_time;
-    });
+        video.addEventListener('loadedmetadata', function () {
 
+            video.currentTime = movie_time;
+        });
 
+        video.addEventListener("error",function () {
+            console.log('error');
+            window.setTimeout(function(){
+                if(times >= 7){
+                    console.log("error 7 times, restarting stream");
+                    start_stream(path);
+                }else{
+                    console.log("error, reloading " + times);
+                    play(source, path, times);
+                }
+            }, 1000);
+        });
+
+    }else{
+        video.src = source;
+    }
+
+/*
     window.setTimeout(function(){
         if(video.error){
             if(times >= 7){
@@ -108,15 +127,10 @@ function play(source, path, times){
                 play(source, path, times);
             }
         }
-        video.addEventListener("error",function () {
-            console.log('error');
-            window.setTimeout(function(){
-                play(source, path, times)
-            }, 1000);
-        });
+
     }, 1000);
 
-
+*/
 
 }
 

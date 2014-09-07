@@ -71,13 +71,14 @@ function search(search){
     });
 }
 
-function create_videoplayer(source, path){
+function create_videoplayer(source, path, poster){
     video = $("video")[0];
 
     if(video == undefined){
+        movie = {path: path, poster: poster};
         console.log("creating player: " + source);
         var template = $('#movie-player-template').html();
-        var html = Mustache.to_html(template);
+        var html = Mustache.to_html(template, movie);
         $("div#content").html(html);
 
         video = $("video")[0];
@@ -116,12 +117,11 @@ function movie_to_html(movie){
     return html;
 }
 
-function start_stream(path){
+function start_stream(path, poster){
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
     var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed;
-    var poster_ajax_url = "poster.php?i=" + path;
 
     console.log("starting stream: " + stream_ajax_url);
     $.ajax({
@@ -131,14 +131,7 @@ function start_stream(path){
         play(stream_url);
     });
 
-    console.log("generationg poster: " + stream_ajax_url);
-    $.ajax({
-        url: poster_ajax_url
-    }).done(function( data ) {
-        console.log("poster generated");
-        create_videoplayer(stream_url, path);
-    });
-
+    create_videoplayer(stream_url, path, poster);
 
     return stream_url;
 }

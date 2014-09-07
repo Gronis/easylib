@@ -98,6 +98,9 @@ class TMDB_Scraper extends Scraper{
             $movie->poster_small_url = $this->db->image_url('poster','w185',$result->poster_path);
             $movie->poster_medium_url = $this->db->image_url('poster','w342',$result->poster_path);
             $movie->poster_large_url = $this->db->image_url('poster','w500',$result->poster_path);
+            $movie->backdrop_small_url = $this->db->image_url('backdrop','w300',$result->backdrop_path);
+            $movie->backdrop_medium_url = $this->db->image_url('backdrop','w720',$result->backdrop_path);
+            $movie->backdrop_large_url = $this->db->image_url('backdrop','w1280',$result->backdrop_path);
             $movie->file_path = $full_filename; //$file_link; <-- used in case link was nessesary
 
             //print_r($movie);

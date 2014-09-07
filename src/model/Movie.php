@@ -19,6 +19,9 @@ class Movie{
     public $poster_small_url;
     public $poster_medium_url;
     public $poster_large_url;
+    public $backdrop_small_url;
+    public $backdrop_medium_url;
+    public $backdrop_large_url;
     public $file_path;
 
 }

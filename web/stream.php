@@ -12,6 +12,10 @@ include_once(__DIR__ . '/../vendor/autoload.php');
 if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     exec('pkill ffmpeg');
 
+    if(!file_exists("temp")){
+        mkdir("temp");
+    }
+
     $config = \Easylib\util\Config::get();
 
     $ffserver = $config["ffserver"];

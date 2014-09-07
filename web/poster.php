@@ -16,19 +16,16 @@ if(array_key_exists('i',$_GET)){
     $posterfile = "temp/poster.png";
 
     $input = $_GET['i'];
-    $feed = $_GET['f'];
 
     $poster_time = '00:01:00';
-
-    if($is_h264){
-        $video_codec = 'copy';
-        $override_ffserver = false;
-    }
+    $width = 320;
+    $height = 240;
 
     $param = array();
     $param[] = '-y';
     $param[] = '-ss ' . $poster_time;
     $param[] = "-i '$input'";
+    $param[] = "-vf scale=$width:$height";
     $param[] = '-r 1';
     $param[] = '-t 1';
     $param[] = '-f image2';

@@ -14,6 +14,6 @@ $app = new Application();
 
 //if the user searches for something:
 if(array_key_exists('search',$_GET)){
-    echo json_encode($app->search(array($_GET['search'])), JSON_UNESCAPED_SLASHES);
+    echo json_encode($app->search($_GET['search']), JSON_UNESCAPED_SLASHES);
 }
 

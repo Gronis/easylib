@@ -49,9 +49,6 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
     $param[] = '-preset ultrafast';
-   // $param[] = "-movflags +faststart";
-   // $param[] = "-tune fastdecode";
-   // $param[] = "-threads 2";
     $param[] = "-flags +global_header";
     $param[] = "$protocol://$server:$port/$feed";
 

@@ -57,6 +57,9 @@ class Application{
     }
 
     public function search($param){
+        if(is_string($param)){
+            return $this->search(array($param));
+        }
         if(count($param) < 1) return;
         //implode arguments with regex or sign
         $match_values = '/' .implode('|',$param) . '/i';

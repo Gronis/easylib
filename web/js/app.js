@@ -93,7 +93,7 @@ function create_videoplayer(source, path){
 
         video.addEventListener("error",function () {
             window.setTimeout(function(){
-                if(!video.src != null && video.src != "http://localhost/null"){
+                if(!video.src != null && video.src.match("/null/i") != null){
                     console.log("error, restarting stream "+ video.src);
                     start_stream(path)
                 }

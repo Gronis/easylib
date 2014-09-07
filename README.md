@@ -12,8 +12,10 @@ Requirements:
 ------------
 
 * PHP 5.3+
-* Curl for php
+* curl and php5-curl
 * ffmpeg
+* libx264
+* libmp3lame
 
 Setup:
 -----
@@ -44,6 +46,8 @@ ffmpeg streams to http port 8090 for now. That port must be open in the firewall
 ### Global CLI access: ###
 
 Add a shortcut to easylib in your /usr/bin folder with "ln" so you can access it from anywhere
+
+e.g. "ln -s /full/path/to/easylib /usr/bin/easylib"
 
 Cli basic usage:
 -----------

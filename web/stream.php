@@ -28,7 +28,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $input = $_GET['i'];
     $feed = $_GET['f'];
 
-    $is_h264 = preg_match("/h264/i",shell_exec("$ffprobe '$input' 2>&1"));
+    $is_h264 = preg_match("/h264/i",shell_exec("$ffprobe \"$input\" 2>&1"));
 
     $protocol = "http";
     $server = "localhost";
@@ -49,7 +49,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     $param = array('-y','-re');
     if($override_ffserver) $param[] = '-override_ffserver';
     $param[] = '-ss ' . $video_time;
-    $param[] = "-i '$input'";
+    $param[] = "-i \"$input\"";
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
     $param[] = '-preset ultrafast';

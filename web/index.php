@@ -65,7 +65,7 @@
                     <div class='card-title'>
                         <!--movie name-->
                         <!--<h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>-->
-                        <h4><a href="#" onclick="start_stream('{{file_path}}', '{{backdrop_medium_url}}')">{{title}}</a></h4>
+                        <h4><a href="#" onclick='start_stream("{{file_path}}", "{{backdrop_medium_url}}")'>{{title}}</a></h4>
                         <!--release year-->
                         <h5>{{release_date}}</h5>
                     </div>

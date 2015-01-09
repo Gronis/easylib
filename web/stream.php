@@ -63,7 +63,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     exec_background("$ffmpeg $params", $logfile, $pidfile);
 
     //wait for 2 seconds or error to return ajax request
-    while(!preg_match("/(time=00:00:02)|(Conversion failed)/i",file_get_contents($logfile)));
+    while(!preg_match("/(time=00:00:03)|(Conversion failed)/i",file_get_contents($logfile)));
 
     echo file_get_contents($logfile);
 

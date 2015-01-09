@@ -20,11 +20,15 @@ a:hover{
     text-decoration: no-underline;
 }
 
+.navbar{
+    max-width: 820px;
+}
 #search{
     height: 32px;
     color: #222222;
     background-color: #fff;
     margin: 6px;
+
 }
 
 #search-input{
@@ -43,6 +47,42 @@ a:hover{
 
 #content{
     margin: 44px auto auto auto;
+}
+
+#card-layout{
+    width: 100%;
+}
+
+#player-layout{
+    background-color: #000;
+}
+
+video{
+    width: 100%;
+    height: inherit;
+    max-width: 1220px;
+    margin: auto;
+    display: block;
+}
+
+/* 2 columns */
+@media all and (min-width: 820px) and (max-width: 1229px) {
+    #card-layout{
+        max-width: 820px;
+    }
+}
+
+/* 3 columns */
+@media all and (min-width: 1230px) and (max-width: 1639px) {
+    #card-layout{
+        max-width: 1230px;
+    }
+}
+
+@media all and (min-width: 1640px) {
+    #card-layout{
+        max-width: 1640px;
+    }
 }
 
 .footer {
@@ -161,11 +201,6 @@ a:hover{
     height: 1px;
     background-color: #eee;
     margin: 0 auto;
-}
-
-video{
-    width: 100%;
-    margin: auto;
 }
 
 /*

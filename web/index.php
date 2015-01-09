@@ -18,8 +18,7 @@
 
 </head>
     <body>
-
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-fixed-top center">
             <div class="input-group center" id = "search">
                 <input id="search-input" class="form-control" type="text" autocomplete="off" autofocus=""
                        placeholder="Search" oninput="search(this.value)" onkeydown="if(event.keyCode == 13) this.oninput()"/>
@@ -32,9 +31,9 @@
             </div>
         </div>
 
-
-        <div id="content" >
-
+        <div id="content">
+            <div id="player-layout"></div>
+            <div id="card-layout" class="center"></div>
         </div>
 
         <div class="footer">
@@ -82,7 +81,7 @@
         </script>
 
         <script id="movie-player-template" type="text/template">
-            <div id="media_player">
+            <div id="media_player" class="center">
                 <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}" controls>
 
                 </video>

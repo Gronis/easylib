@@ -16,7 +16,6 @@ $( document ).ready(function() {
 
 window.onunload = function(){
     stop_stream();
-    alert("stopped stream");
     console.log("stopped stream");
 };
 
@@ -25,13 +24,14 @@ function init_autohide_navbar(){
 }
 
 function init_masonry(){
-    var container = document.querySelector('#content');
+    var container = document.querySelector('#card-layout');
 
     var masonry = new Masonry(container, {
         columnWidth: 10,
         itemSelector: '.card',
         isFitWidth: false,
-        isAnimated: true
+        isAnimated: false,
+        transitionDuration: 0
     });
     /*window.addEventListener('resize', function(event){
      if(document.body.clientWidth < 820){
@@ -43,7 +43,6 @@ function init_masonry(){
 }
 
 function search(search){
-    stop_stream();
     console.log(search);
 
     var this_search = new Date().getTime();
@@ -64,7 +63,7 @@ function search(search){
                     movies.push([movie, lib.movies[movie]]);
                     html += movie_to_html(lib.movies[movie]);
                 }
-                $("div#content").html(html);
+                $("div#card-layout").html(html);
                 init_masonry();
             }
         }
@@ -79,7 +78,7 @@ function create_videoplayer(source, path, poster){
         console.log("creating player: " + source);
         var template = $('#movie-player-template').html();
         var html = Mustache.to_html(template, movie);
-        $("div#content").html(html);
+        $("div#player-layout").html(html);
 
         video = $("video")[0];
 
@@ -97,13 +96,14 @@ function create_videoplayer(source, path, poster){
         });
 
         video.addEventListener("error",function () {
+            console.log("error, restarting stream "+ video.src);
+            start_stream(path, poster);
             window.setTimeout(function(){
                 if(!video.src != null && video.src.match("/null/i") != null){
-                    console.log("error, restarting stream "+ video.src);
-                    start_stream(path)
+
                 }
             }, 1000);
-        });
+        }, false);
 
     }
 
@@ -127,6 +127,7 @@ function movie_to_html(movie){
 }
 
 function start_stream(path, poster){
+    stop_stream();
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
@@ -149,9 +150,9 @@ function stop_stream(){
     var video = document.getElementsByTagName('video')[0];
     if(video != undefined){
         video.pause();
-        video.src = null;
+        //video.src = null;
     }
-
+    console.log("Killing ffmpeg on server...");
     $.ajax({
         url: "stream.php"
     }).done(function( data ) {

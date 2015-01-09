@@ -3,6 +3,9 @@
  */
 var last_search;
 var movie_time = 0;
+var video_path = "";
+var video_poster= "";
+var video_loading = false;
 
 $( document ).ready(function() {
     console.log( "ready!" );
@@ -70,11 +73,11 @@ function search(search){
     });
 }
 
-function create_videoplayer(source, path, poster){
+function create_videoplayer(source){
     video = $("video")[0];
 
     if(video == undefined){
-        movie = {path: path, poster: poster};
+        movie = {path: video_path, poster: video_poster};
         console.log("creating player: " + source);
         var template = $('#movie-player-template').html();
         var html = Mustache.to_html(template, movie);
@@ -98,7 +101,7 @@ function create_videoplayer(source, path, poster){
         video.addEventListener("error",function () {
             if(!video.paused){
                 console.log("error, restarting stream "+ video.src);
-                start_stream(path, poster);
+                start_stream(video_path, video_poster);
             }
             /*
             window.setTimeout(function(){
@@ -108,6 +111,8 @@ function create_videoplayer(source, path, poster){
             }, 1000);*/
         }, false);
 
+    }else{
+        video.poster = video_poster;
     }
 
 }
@@ -145,17 +150,22 @@ function start_stream(path, poster){
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
     var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed;
 
-    console.log("starting stream: " + stream_ajax_url);
-    $.ajax({
-        url: stream_ajax_url
-    }).done(function( data ) {
-        console.log("stream started on server side");
-        play(stream_url);
-    });
-
-    create_videoplayer(stream_url, path, poster);
-
+    if(video_loading == false){
+        video_loading = true;
+        video_path = path;
+        video_poster = poster;
+        console.log("starting stream: " + stream_ajax_url);
+        $.ajax({
+            url: stream_ajax_url
+        }).done(function( data ) {
+            console.log("stream started on server side");
+            video_loading = false;
+            play(stream_url);
+        });
+        create_videoplayer(stream_url);
+    }
     return stream_url;
+
 }
 
 function stop_stream(){

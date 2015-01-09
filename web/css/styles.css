@@ -168,6 +168,8 @@ video{
     margin: auto;
 }
 
+/*
 ::-webkit-media-controls {
     display:none !important;
 }
+*/

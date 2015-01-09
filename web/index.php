@@ -83,7 +83,7 @@
 
         <script id="movie-player-template" type="text/template">
             <div id="media_player">
-                <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}">
+                <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}" controls>
 
                 </video>
             </div>

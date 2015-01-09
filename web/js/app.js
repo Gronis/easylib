@@ -83,6 +83,10 @@ function create_videoplayer(source, path, poster){
 
         video = $("video")[0];
 
+        video.addEventListener("loadedmetadata", function(){
+           video.play();
+        }, false);
+
         video.addEventListener('waiting', function() {
             console.log('waiting');
         }, false);
@@ -108,6 +112,11 @@ function create_videoplayer(source, path, poster){
 function play(source){
     var video = document.getElementsByTagName('video')[0];
     video.src = source + "?buffer=5";
+    video.play();
+    video.addEventListener('click',function(){
+        video.play();
+    },false);
+
     console.log("Playing: " + video.src);
 }
 

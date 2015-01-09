@@ -58,6 +58,9 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $params = implode(" ",$param);
 
+    //delete old logfile before starting new stream
+    unlink($logfile);
+
     exec_background("$ffserver -f $ffserver_config");
     sleep(0.1);
     exec_background("$ffmpeg $params", $logfile, $pidfile);

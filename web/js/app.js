@@ -103,12 +103,13 @@ function create_videoplayer(source){
                 console.log("error, restarting stream "+ video.src);
                 start_stream(video_path, video_poster);
             }
-            /*
+            video_loading = false;
+
             window.setTimeout(function(){
                 if(!video.src != null && video.src.match("/null/i") != null){
 
                 }
-            }, 1000);*/
+            }, 1000);
         }, false);
 
     }else{
@@ -156,11 +157,17 @@ function start_stream(path, poster){
         video_poster = poster;
         console.log("starting stream: " + stream_ajax_url);
         $.ajax({
-            url: stream_ajax_url
+            url: stream_ajax_url,
+            success : function (data){
+                console.log("stream started on server side");
+                video_loading = false;
+                play(stream_url);
+            },
+            error: function (data){
+                video_loading = false;
+            }
         }).done(function( data ) {
-            console.log("stream started on server side");
-            video_loading = false;
-            play(stream_url);
+
         });
         create_videoplayer(stream_url);
     }

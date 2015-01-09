@@ -96,13 +96,16 @@ function create_videoplayer(source, path, poster){
         });
 
         video.addEventListener("error",function () {
-            console.log("error, restarting stream "+ video.src);
-            start_stream(path, poster);
+            if(!video.paused){
+                console.log("error, restarting stream "+ video.src);
+                start_stream(path, poster);
+            }
+            /*
             window.setTimeout(function(){
                 if(!video.src != null && video.src.match("/null/i") != null){
 
                 }
-            }, 1000);
+            }, 1000);*/
         }, false);
 
     }
@@ -111,13 +114,22 @@ function create_videoplayer(source, path, poster){
 
 function play(source){
     var video = document.getElementsByTagName('video')[0];
-    video.src = source + "?buffer=5";
-    video.play();
-    video.addEventListener('click',function(){
+    if(video != undefined){
+        video.src = source + "?buffer=5";
         video.play();
-    },false);
+        video.addEventListener('click',function(){
+            video.play();
+        },false);
 
-    console.log("Playing: " + video.src);
+        console.log("Playing: " + video.src);
+    }
+}
+
+function pause(){
+    var video = document.getElementsByTagName('video')[0];
+    if(video != undefined){
+        video.pause();
+    }
 }
 
 function movie_to_html(movie){
@@ -127,7 +139,7 @@ function movie_to_html(movie){
 }
 
 function start_stream(path, poster){
-    stop_stream();
+    pause();
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;

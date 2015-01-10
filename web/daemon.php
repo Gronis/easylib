@@ -15,12 +15,11 @@ function run(){
 
 
     while(true){
-        sleep(10);
-
+        sleep(5);
         $html = get_html("http://localhost:8090/stat.html");
         $bitrate = get_bitrate($html);
 
-        if($bitrate == 0 || is_null($html) && $last_check){
+        if(($bitrate == 0 || is_null($html)) && $last_check){
             kill("ffserver");
             break;
         }

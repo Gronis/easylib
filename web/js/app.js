@@ -2,7 +2,10 @@
  * Created by robin on 20/08/14.
  */
 var last_search;
-var movie_time = 0;
+var stream_start_time = 0;
+var stream_current_time = 0;
+var video_start_time = 0;
+var video_current_time = 0;
 var video_path = "";
 var video_poster= "";
 var video_loading = false;
@@ -85,26 +88,44 @@ function create_videoplayer(source){
 
         video = $("video")[0];
 
-        video.addEventListener("loadedmetadata", function(){
-           video.play();
+        video.addEventListener('click',function(){
+            if(video.errorCode != undefined){
+                console.log("Cannot resume stream, restarting stream");
+                start_stream(video_path,video_poster);
+            }
+            if(video.readyState == 4){
+                video.play();
+            }
+        },false);
+
+        video.addEventListener("canplaythrough", function(){
+            window.setTimeout(function(){
+
+            }, 500);
+            video.play();
         }, false);
 
         video.addEventListener('waiting', function() {
             console.log('waiting');
         }, false);
 
-        video.addEventListener('loadedmetadata', function () {
+        video.addEventListener('pause', function() {
+            stream_current_time = video.currentTime;
+            video_current_time = stream_current_time - stream_start_time;
+            console.log('paused, current time: ' + video_current_time);
+        }, false);
 
-            video.currentTime = movie_time;
+        video.addEventListener('loadeddata', function () {
+            stream_start_time = video.currentTime;
+            console.log('data loaded, starting time: ' + stream_start_time );
         });
 
         video.addEventListener("error",function () {
             if(!video.paused){
-                console.log("error, restarting stream "+ video.src);
+            //if(video.networkState == HTMLMediaElement.NETWORK_NO_SOURCE){
+                console.log("error, restarting stream "+ video.src + video.networkState);
                 start_stream(video_path, video_poster);
             }
-            video_loading = false;
-
             window.setTimeout(function(){
                 if(!video.src != null && video.src.match("/null/i") != null){
 
@@ -122,12 +143,12 @@ function play(source){
     var video = document.getElementsByTagName('video')[0];
     if(video != undefined){
         video.src = source + "?buffer=5";
-        video.play();
-        video.addEventListener('click',function(){
+        if(video.readyState == 4){
             video.play();
-        },false);
-
-        console.log("Playing: " + video.src);
+            console.log("Playing: " + video.src);
+        }
+    }else{
+        console.log("cant play video: " + (video != undefined? video.readyState : "video element missing"));
     }
 }
 
@@ -145,14 +166,19 @@ function movie_to_html(movie){
 }
 
 function start_stream(path, poster){
-    pause();
+    //restart video when starting to stream new video
+    if(path != video_path){
+        video_current_time = video_start_time = 0;
+    }
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
-    var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed;
+    var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed + "&t=" + (video_current_time + video_start_time);
+    video_start_time += video_current_time;
+    video_current_time = 0;
 
-    if(video_loading == false){
-        video_loading = true;
+    //if(video_loading == false){
+        //video_loading = true;
         video_path = path;
         video_poster = poster;
         console.log("starting stream: " + stream_ajax_url);
@@ -165,12 +191,15 @@ function start_stream(path, poster){
             },
             error: function (data){
                 video_loading = false;
+                console.log("Something when wrong on server side when starting steam, restarting stream");
+                start_stream(path,poster);
             }
         }).done(function( data ) {
 
         });
         create_videoplayer(stream_url);
-    }
+    //}
+    pause();
     return stream_url;
 
 }

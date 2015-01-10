@@ -9,7 +9,7 @@ include_once(__DIR__ . '/../vendor/autoload.php');
  * Date: 25/08/14
  * Time: 17:14
  */
-if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
+if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exists('t',$_GET)){
     exec('pkill ffmpeg');
 
     if(!file_exists("temp")){
@@ -27,6 +27,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $input = $_GET['i'];
     $feed = $_GET['f'];
+    $time = $_GET['t'];
 
     $is_h264 = preg_match("/h264/i",shell_exec("$ffprobe \"$input\" 2>&1"));
 
@@ -36,7 +37,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
 
     $ffserver_config = "config/ffserver.conf";
     $override_ffserver = true;
-    $video_time = '00:00:00';
+    $video_time = sprintf('%02d:%02d:%02d', ($time/3600),($time/60%60), $time%60);
 
     $video_codec = 'libx264';
     $audio_codec = 'libmp3lame';
@@ -50,6 +51,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET)){
     if($override_ffserver) $param[] = '-override_ffserver';
     $param[] = '-ss ' . $video_time;
     $param[] = "-i \"$input\"";
+    $param[] = "-ss 00:00:00";
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
     $param[] = '-preset ultrafast';

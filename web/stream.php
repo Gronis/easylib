@@ -51,7 +51,6 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exist
     if($override_ffserver) $param[] = '-override_ffserver';
     $param[] = '-ss ' . $video_time;
     $param[] = "-i \"$input\"";
-    $param[] = "-ss 00:00:00";
     $param[] = "-acodec " . $audio_codec;
     $param[] = "-vcodec " . $video_codec;
     $param[] = '-preset ultrafast';
@@ -68,7 +67,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exist
     exec_background("$ffmpeg $params", $logfile, $pidfile);
 
     //wait for 2 seconds or error to return ajax request
-    while(!preg_match("/(time=00:00:03)|(Conversion failed)/i",file_get_contents($logfile)));
+    while(!preg_match("/(time=00:00:02)|(Conversion failed)/i",file_get_contents($logfile)));
 
     echo file_get_contents($logfile);
 

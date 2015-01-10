@@ -121,9 +121,8 @@ function create_videoplayer(source){
         });
 
         video.addEventListener("error",function () {
-            if(!video.paused){
-            //if(video.networkState == HTMLMediaElement.NETWORK_NO_SOURCE){
-                console.log("error, restarting stream "+ video.src + video.networkState);
+            if(!video.paused || video.networkState == HTMLMediaElement.NETWORK_NO_SOURCE){
+                console.log("error, restarting stream "+ video.src);
                 start_stream(video_path, video_poster);
             }
             window.setTimeout(function(){
@@ -168,7 +167,8 @@ function movie_to_html(movie){
 function start_stream(path, poster){
     //restart video when starting to stream new video
     if(path != video_path){
-        video_current_time = video_start_time = 0;
+        video_start_time = 0;
+        video_current_time = 0;
     }
     var feed = "feed.ffm";
     var stream = "test.mkv"

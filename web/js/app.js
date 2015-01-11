@@ -162,7 +162,7 @@ function play(source){
     var video = document.getElementsByTagName('video')[0];
     if(video != undefined){
         if(!has_video() && source != undefined){
-            video.src = source + "?buffer=5";
+            video.src = source + "?buffer=2";
         }
         if(video.paused){
             if(video.readyState == 4){

@@ -27,7 +27,7 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exist
 
     $input = $_GET['i'];
     $feed = $_GET['f'];
-    $time = $_GET['t'];
+    $time = $_GET['t'] - 5 < 0? 0 : $_GET['t'] - 5;
 
     $probe_output = shell_exec("$ffprobe \"$input\" 2>&1");
 

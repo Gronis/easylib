@@ -29,7 +29,12 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exist
     $feed = $_GET['f'];
     $time = $_GET['t'];
 
-    $is_h264 = preg_match("/h264/i",shell_exec("$ffprobe \"$input\" 2>&1"));
+    $probe_output = shell_exec("$ffprobe \"$input\" 2>&1");
+
+    $is_h264 = preg_match("/h264/i", $probe_output);
+    preg_match("/Duration: [\d][\d]:[\d][\d]:[\d][\d].[\d][\d]/",$probe_output, $matches)[0];
+    $duration = substr($matches[0],10);
+    $duration = strtotime("1970-01-01 $duration UTC");
 
     $protocol = "http";
     $server = "localhost";
@@ -69,7 +74,11 @@ if(array_key_exists('i',$_GET) && array_key_exists('f',$_GET) && array_key_exist
     //wait for 2 seconds or error to return ajax request
     while(!preg_match("/(time=00:00:02)|(Conversion failed)/i",file_get_contents($logfile)));
 
-    echo file_get_contents($logfile);
+    $return_data['stdout'] = file_get_contents($logfile);
+    $return_data['probe'] = $probe_output;
+    $return_data['duration'] = $duration;
+
+    echo(json_encode($return_data));
 
     exec_background($daemon);
 

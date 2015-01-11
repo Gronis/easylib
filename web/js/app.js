@@ -6,11 +6,12 @@ var stream_start_time = 0;
 var stream_current_time = 0;
 var video_start_time = 0;
 var video_current_time = 0;
+var video_total_duration = 0;
 var video_path = "";
 var video_poster= "";
 var video_loading = false;
 
-var video_total_time = function(){
+var video_current_duration = function(){
     return video_start_time + video_current_time;
 }
 
@@ -119,7 +120,7 @@ function create_videoplayer(source){
             if(!video.paused){
                 stream_current_time = video.currentTime;
                 video_current_time = stream_current_time - stream_start_time;
-                console.log('updated, current time: ' + video_total_time());
+                console.log('updated, current time: ' + video_current_duration());
             }
         }, false);
 
@@ -142,6 +143,13 @@ function create_videoplayer(source){
 
                 }
             }, 1000);
+        }, false);
+
+        video.addEventListener("ended",function () {
+            if(video_total_duration > video_current_duration()){
+                console.log("stream died suddenly, restarting "+ video.src);
+                start_stream(video_path, video_poster);
+            }
         }, false);
 
     }else{
@@ -196,7 +204,7 @@ function start_stream(path, poster){
     var feed = "feed.ffm";
     var stream = "test.mkv"
     var stream_url = "http://" + window.location.hostname + ":8090/" + stream;
-    var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed + "&t=" + video_total_time();
+    var stream_ajax_url = "stream.php?i=" + path + "&f=" + feed + "&t=" + video_current_duration();
 
     if(!video_loading){
         video_start_time += video_current_time;
@@ -208,7 +216,9 @@ function start_stream(path, poster){
         $.ajax({
             url: stream_ajax_url,
             success : function (data){
-                console.log("stream started on server side");
+                var json_data = JSON.parse(data);
+                video_total_duration = json_data.duration;
+                console.log("stream started on server side, duration: " + video_total_duration);
                 video_loading = false;
                 play(stream_url);
             },

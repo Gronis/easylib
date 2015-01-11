@@ -61,6 +61,8 @@ function init_masonry(){
 function search(search){
     console.log(search);
 
+    $("div#card-layout").html("<div class='loading-circle'></div>");
+
     var this_search = new Date().getTime();
     last_search = this_search;
 

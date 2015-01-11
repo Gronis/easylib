@@ -55,6 +55,7 @@ a:hover{
 
 #player-layout{
     background-color: #000;
+    width: 100%;
 }
 
 video{
@@ -201,6 +202,22 @@ video{
     height: 1px;
     background-color: #eee;
     margin: 0 auto;
+}
+
+.loading-circle{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    -webkit-box-sizing: border-box;
+    border: solid 10px rgba(0, 0, 0, 0);
+    border-top-color: #000;
+    -webkit-animation: spin 0.5s infinite ease;
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 /*

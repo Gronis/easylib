@@ -33,7 +33,7 @@
 
         <div id="content">
             <div id="player-layout"></div>
-            <div id="card-layout" class="center"></div>
+            <div id="card-layout" class="center"> </div>
         </div>
 
         <div class="footer">
@@ -53,6 +53,8 @@
         <script src="js/mustache.js"></script>
         <!-- Masonry, tile cards-->
         <script src="js/masonry.min.js"></script>
+        <!-- velocity, used for some animations-->
+        <!--cript src="https://raw.githubusercontent.com/julianshapiro/velocity/master/velocity.min.js"></script-->
         <!-- my own javascript-->
         <script src="js/app.js"></script>
 
@@ -86,6 +88,10 @@
 
                 </video>
             </div>
+        </script>
+
+        <script id="loading-cirle-template" type="text/template">
+            <div class="loading-circle"></div>
         </script>
 
     </body>

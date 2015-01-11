@@ -205,6 +205,8 @@ video{
 }
 
 .loading-circle{
+    margin: 100px auto 100px auto;
+    text-align: center;
     width: 80px;
     height: 80px;
     border-radius: 40px;

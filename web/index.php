@@ -90,9 +90,5 @@
             </div>
         </script>
 
-        <script id="loading-cirle-template" type="text/template">
-            <div class="loading-circle"></div>
-        </script>
-
     </body>
 </html>

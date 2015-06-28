@@ -18,21 +18,22 @@
 
 </head>
     <body>
-        <div class="navbar navbar-fixed-top center">
+        <div class="navbar navbar-fixed-top">
             <div class="input-group center" id = "search">
                 <input id="search-input" class="form-control" type="text" autocomplete="off" autofocus=""
                        placeholder="Search" oninput="search(this.value)" onkeydown="if(event.keyCode == 13) this.oninput()"/>
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button"
+                    <button class="btn" id="search-btn" type="button"
                             onclick="search(document.getElementById('search-input').value)">
-                        <span class="glyphicon glyphicon-search"></span>
+                        <span class="glyphicon glyphicon-search" id="search-icon"></span>
                     </button>
                 </span>
             </div>
         </div>
 
         <div id="content">
-            <div id="player-layout"></div>
+            <div id="player-layout" hidden="true"></div>
+            <div id="player-block" hidden="true"></div>
             <div id="card-layout" class="center"> </div>
         </div>
 
@@ -66,7 +67,7 @@
                     <div class='card-title'>
                         <!--movie name-->
                         <!--<h4><a href='http://www.youtube.com/watch?v={{trailer}}'>{{title}}</a></h4>-->
-                        <h4><a href="#" onclick='start_stream("{{file_path}}", "{{backdrop_medium_url}}")'>{{title}}</a></h4>
+                        <h4><a href="#" onclick='start_video("{{file_path}}", "{{backdrop_medium_url}}")'>{{title}}</a></h4>
                         <!--release year-->
                         <h5>{{release_date}}</h5>
                     </div>
@@ -83,8 +84,12 @@
         </script>
 
         <script id="movie-player-template" type="text/template">
+            <div id="video-controls">
+
+            </div>
+            <button id="video-play-pause-button" onclick='video_toggle_play_pause()'></button>
             <div id="media_player" class="center">
-                <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}" controls>
+                <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}">
 
                 </video>
             </div>

@@ -11,6 +11,8 @@ var video_path = "";
 var video_poster= "";
 var video_loading = false;
 
+var lastScrollTop = 0;
+
 var video_current_duration = function(){
     return video_start_time + video_current_time;
 }
@@ -18,6 +20,10 @@ var video_current_duration = function(){
 var has_video = function(){
     video = $("video")[0];
     return video != undefined && video.src.match("test") != null;
+}
+
+var should_video_play = function(){
+    return $("div#media_player").length != 0;
 }
 
 $( document ).ready(function() {
@@ -36,7 +42,7 @@ window.onunload = function(){
 };
 
 function init_autohide_navbar(){
-    $("div.navbar-fixed-top").autoHidingNavbar();
+    //$("div.navbar-fixed-top").autoHidingNavbar();
 }
 
 function init_masonry(){
@@ -58,9 +64,30 @@ function init_masonry(){
      });*/
 }
 
+//scrolling
+$(window).scroll(function(event){
+    var st = $(this).scrollTop();
+    if (st > lastScrollTop){
+        // Down scroll
+        var scroll_from_top = $(document).scrollTop();
+        if(scroll_from_top > video_height() * 2){
+            minimize_player();
+        }
+    } else {
+        // Up scroll
+        var scroll_from_top = $(document).scrollTop();
+        if(scroll_from_top < video_height() * 2){
+            maximize_player();
+            console.log(scroll_from_top);
+        }
+    }
+    lastScrollTop = st;
+});
+
 function search(search){
     console.log(search);
-
+    minimize_player();
+    $("div#player-block").hide();
     $("div#card-layout").html("<div class='loading-circle'></div>");
 
     var this_search = new Date().getTime();
@@ -97,10 +124,11 @@ function create_videoplayer(source){
         var template = $('#movie-player-template').html();
         var html = Mustache.to_html(template, movie);
         $("div#player-layout").html(html);
-
+        show_player();
         video = $("video")[0];
 
         video.addEventListener('click',function(){
+            maximize_player();
             if(video.errorCode != undefined){
                 console.log("Cannot resume stream, restarting stream");
                 start_stream(video_path,video_poster);
@@ -132,8 +160,13 @@ function create_videoplayer(source){
         });
 
         video.addEventListener("error",function () {
-            console.log("error, networkState: " + video.networkState +  ", has video: " + has_video());
 
+            if(!should_video_play()){
+                //should not handle error when media player closes
+                console.log("Video player has been closed.");
+                return;
+            }
+            console.log("error, networkState: " + video.networkState +  ", has video: " + has_video());
             if(has_video() && (!video.paused ||
                     video.networkState == HTMLMediaElement.NETWORK_NO_SOURCE ||
                     video.networkState == HTMLMediaElement.NETWORK_IDLE)){
@@ -157,6 +190,53 @@ function create_videoplayer(source){
     }else{
         video.poster = video_poster;
     }
+}
+
+function destroy_videoplayer(){
+    hide_player();
+    stop_stream();
+    $("div#media_player").remove();
+}
+
+function hide_player(){
+    $("div#player-layout").hide();
+    $("div#player-block").hide();
+}
+
+function show_player(){
+    $("div#player-layout").show();
+    $("div#player-block").show();
+}
+
+function minimize_player(){
+    if(should_video_play()){
+        $("div.navbar").removeClass("typing", 1000, "easeInBack");
+        $("div#player-block").show();
+        $("div#player-layout").addClass("media_player_minimized", 1000, "easeInBack");
+    }
+}
+
+function maximize_player(){
+    if(should_video_play()){
+        $("div.navbar").addClass("typing");
+        $("div#player-block").show();
+        $("div#player-layout").removeClass("media_player_minimized");
+    }
+}
+
+function is_minimized(){
+    return $("div#player-layout").hasClass("media_player_minimized");
+}
+
+function video_height(){
+    return $("div#player-layout").height();
+}
+
+function video_width(){
+    return $("div#player-layout").width();
+}
+
+function video_toggle_play_pause(){
 
 }
 
@@ -193,6 +273,15 @@ function movie_to_html(movie){
     var template = $('#movie-card-template').html();
     var html = Mustache.to_html(template, movie);
     return html;
+
+}
+
+function start_video(path, poster){
+    start_stream(path, poster);
+    var scroll = $(document).scrollTop();
+    maximize_player();
+    console.log(scroll);
+    $(document).scrollTop(scroll);
 }
 
 function start_stream(path, poster){

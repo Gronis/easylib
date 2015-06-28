@@ -21,19 +21,37 @@ a:hover{
 }
 
 .navbar{
-    max-width: 820px;
+    padding-top: 2px;
+    background-color: #E62117 ;
 }
 #search{
+    max-width: 834px;
     height: 32px;
     color: #222222;
-    background-color: #fff;
-    margin: 6px;
-
+    padding: 6px;
 }
-
 #search-input{
     font-size: 18px;
     text-align: center;
+    background-color: #F06B63;
+    border-width: 0px;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+}
+.navbar.typing{
+    background-color: #000;
+}
+.navbar.typing > #search > span > #search-btn,
+.navbar.typing > #search > #search-input{
+    background-color: #444;
+}
+
+#search-icon,
+#search-input::-webkit-input-placeholder
+{
+    color: #fff;
+    box-shadow: none;
 }
 
 #search img{
@@ -45,8 +63,13 @@ a:hover{
     outline: 0;
 }
 
+#search-btn{
+    background-color: #F06B63;
+    outline: none;
+}
+
 #content{
-    margin: 44px auto auto auto;
+    margin: 50px auto auto auto;
 }
 
 #card-layout{
@@ -54,14 +77,66 @@ a:hover{
 }
 
 #player-layout{
-    background-color: #000;
     width: 100%;
+    height: 57vw;
+    max-height: 610px;
+    background-color: #000;
+    position: fixed;
+    z-index: 2000;
+}
+
+#player-block{
+    width: 100%;
+    height: 57vw;
+    max-height: 610px;
+}
+
+#player-layout.media_player_minimized{
+    width: 60%;
+    height: 32vw;
+    max-width: 400px;
+    max-height: 215px;
+    bottom: 10px;
+    top: auto;
+    right: 10px;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.5);
+}
+
+#media_player{
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#video-controls{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 3000;
+}
+
+#video-play-pause-button{
+    position: absolute;
+    height: 70px;
+    width: 70px;
+    background-color: rgba(0,0,0,0.7);
+    border-width: 0px;
+    z-index: 3000;
+    top: calc(50% - 35px);
+    transform: translateY(-50%);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 video{
     width: 100%;
     height: inherit;
-    max-width: 1220px;
+    max-width: 1080px;
     margin: auto;
     display: block;
 }
@@ -90,10 +165,11 @@ video{
     position: absolute;
     bottom: 0;
     width: 100%;
+    padding-top: 6px;
     /* Set the fixed height of the footer here */
     height: 40px;
     color: #f5f5f5;
-    background-color: #333333;
+    background-color: #E62117;
 }
 
 .footer a, .footer a:hover{
@@ -212,7 +288,7 @@ video{
     border-radius: 40px;
     -webkit-box-sizing: border-box;
     border: solid 10px rgba(0, 0, 0, 0);
-    border-top-color: #000;
+    border-top-color: #999;
     -webkit-animation: spin 0.5s infinite ease;
 }
 

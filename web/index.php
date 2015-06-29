@@ -85,18 +85,34 @@
                     <span class='badge'><h5>{{runtime}} min</h5></span>
 
                     <p>{{overview}}</p>
-                    </div> <!--card-info-->
+                    <div class="read-more"></div>
+                </div> <!--card-info-->
                 <div class='horisontal-line'></div>
             </div>
         </script>
 
         <script id="movie-player-template" type="text/template">
-            <div id="video-controls">
-
+            <div id="video-hud">
+                <button id="video-minimize-button" onclick='minimize_player()'>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </button>
+                <button id="video-fullscreen-button" onclick=''>
+                    <span class="glyphicon glyphicon-fullscreen"></span>
+                </button>
+                <button id="video-play-pause-button" onclick='video_toggle_play_pause()'>
+                    <span class="glyphicon glyphicon-play"></span>
+                </button>
+                <div id="video-controls">
+                    <div id="video-current-duration-label">0:00</div>
+                    <div id="video-duration-bar">
+                        <input id="video-duration-slider" type="range" step="any" min="0" max="100" value="0">
+                            <div id="video-duration-slider-level"></div>
+                        </input>
+                    </div>
+                    <div id="video-total-duration-label">46:32</div>
+                </div>
+                <div id="video-shadow"></div>
             </div>
-            <button id="video-play-pause-button" onclick='video_toggle_play_pause()'>
-                <span class="glyphicon glyphicon-play"></span>
-            </button>
             <div id="media_player" class="center">
                 <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}">
 

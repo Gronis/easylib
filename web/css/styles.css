@@ -54,7 +54,7 @@ a:hover{
     color: #212121;
 }
 .navbar.typing > #searchbar > #search{
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
 }
 .navbar.typing > #searchbar > #menu-btn > span,
 .navbar.typing > #searchbar > #search > span > #search-btn > .navbar-icon,
@@ -66,8 +66,11 @@ a:hover{
 }
 .navbar.watching > #searchbar > #search > span > #search-btn,
 .navbar.watching > #searchbar > #search > #search-input{
-    background-color: #444;
+    background-color: #555;
     color: #fff;
+}
+.navbar.watching > #searchbar > #search{
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
 }
 .navbar.watching > #searchbar > #menu-btn > span,
 .navbar.watching > #searchbar > #search > span > #search-btn > .navbar-icon,
@@ -114,15 +117,15 @@ a:hover{
 }
 
 #player-layout{
-    width: 100%;
-    height: 57vw;
-    max-height: 610px;
     background-color: #000;
     position: fixed;
-    z-index: 2000;
+    z-index: 1000;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,1);
 }
 
-#player-block{
+#player-layout,
+#player-block,
+#video-shadow{
     width: 100%;
     height: 57vw;
     max-height: 610px;
@@ -140,21 +143,104 @@ a:hover{
 }
 
 #media_player{
-    margin-top: auto;
-    margin-bottom: auto;
-    position: relative;
+    width: 100%;
+    position: absolute;
     top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+
+#video-current-duration-label{
+    left: 0px;
+}
+
+#video-total-duration-label{
+    right: 40px;
+}
+
+#video-current-duration-label,
+#video-total-duration-label{
+    font-size: 12px;
+    font-weight: 200;
+    color: white;
+    width: 40px;
+    position: absolute;
+    text-align: center;
+    bottom: 10px;
+}
+
+#video-duration-bar{
+    width: calc(100% - 120px);
+    position: absolute;
+    bottom: 15px;
+    margin-left: 40px;
+    margin-right: 80px
+}
+
+#video-duration-slider{
+    -webkit-appearance: none;
+    height: 5px;
+    background-color: #999;
+}
+
+#video-duration-slider-level{
+    width: 0%;
+    height: 5px;
+    background-color: #E62117;
+    position: absolute;
+    bottom: 0px;
+}
+
+#video-duration-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #fff;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    z-index: 4000;
 }
 
 #video-controls{
     position: absolute;
-    bottom: 0px;
+    bottom: 8px;
     left: 0px;
     width: 100%;
-    height: 50px;
-    background-color: rgba(0,0,0,0.7);
+    height: 40px;
+    background-color: rgba(0,0,0,0);
     z-index: 3000;
+}
+
+#video-fullscreen-button,
+#video-minimize-button{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background-color: rgba(0,0,0,0);
+    border-width: 0px;
+    z-index: 3000;
+    font-size: 20px;
+    color: #fff;
+    outline: none;
+    padding: 0px;
+}
+
+#video-minimize-button{
+    top: 0px;
+    left: 0px;
+}
+
+#video-fullscreen-button{
+    bottom: 0px;
+    right: 0px;
+}
+
+#player-layout.media_player_minimized > #video-hud,
+#player-layout.media_player_hide_hud > #video-hud{
+    display: none;
 }
 
 #video-play-pause-button{
@@ -171,6 +257,12 @@ a:hover{
     font-size: 40px;
     color: #fff;
     outline: none;
+}
+
+#video-shadow{
+    box-shadow: inset 0px -60px 100px black;
+    z-index: 2500;
+    position: absolute;
 }
 
 video{
@@ -206,14 +298,11 @@ video{
     bottom: 0;
     width: 100%;
     padding-top: 6px;
-    /* Set the fixed height of the footer here */
     height: 40px;
-    color: #f5f5f5;
-    background-color: #E62117;
 }
 
 .footer a, .footer a:hover{
-    color: #ffffff;
+    color: #777;
     font-size: 18px;
 }
 
@@ -223,19 +312,38 @@ video{
     margin-right: auto;
 }
 
+.card{
+    background-color: #fff;
+    margin: 3px;
+    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+}
+
+.card-info{
+    padding: 3px 10px 3px 10px;
+    float: left;
+    overflow: hidden;
+}
+
+.card-info .read-more {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: inherit;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 20px;
+    background-image: -webkit-gradient(to bottom, rgba(0,0,0,0), white);
+
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0), white);
+}
+
 @media all and (max-width: 819px) {
     .card{
-        background-color: #fff;
-        margin: 3px;
-        border: solid #dddddd 1px;
         width: calc(100% - 6px);
         height: 30vw;
     }
 
     .card-info{
-        padding: 3px 10px 3px 10px;
-        float: left;
-        overflow: hidden;
         text-overflow: ellipsis;
         height: 30vw;
         width: 80%;
@@ -270,20 +378,16 @@ video{
 
 @media all and (min-width: 820px) {
     .card{
-        background-color: #fff;
-        margin: 3px;
-        border: solid #dddddd 1px;
         height: 152px; /* 2 extra for border*/
         width: 402px;
     }
 
     .card-info{
-        padding: 3px 10px 3px 10px;
-        float: left;
-        width: 280px;
+        width: 290px;
         height: inherit;
-        overflow: hidden;
         text-overflow: clip;
+        margin-right: auto;
+        margin-left: auto;
     }
 
     .card-info p{
@@ -295,8 +399,8 @@ video{
     }
 
     .card-poster{
-        max-width:120px;
-        max-height:100%;
+        max-width:110px;
+        height:100%;
         float: left;
     }
 

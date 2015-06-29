@@ -23,13 +23,18 @@ a:hover{
 .navbar{
     padding-top: 2px;
     background-color: #E62117 ;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.6) ;
 }
 #search{
-    max-width: 834px;
+    max-width: 810px;
     height: 32px;
     color: #222222;
-    padding: 6px;
 }
+
+#searchbar{
+    margin: 6px;
+}
+
 #search-input{
     font-size: 18px;
     text-align: center;
@@ -39,15 +44,39 @@ a:hover{
     box-shadow: none;
     outline: none;
 }
+
 .navbar.typing{
+    background-color: #F6F6F6;
+}
+.navbar.typing > #searchbar > #search > span > #search-btn,
+.navbar.typing > #searchbar > #search > #search-input{
+    background-color: #FFF;
+    color: #212121;
+}
+.navbar.typing > #searchbar > #search{
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+.navbar.typing > #searchbar > #menu-btn > span,
+.navbar.typing > #searchbar > #search > span > #search-btn > .navbar-icon,
+.navbar.typing > #searchbar > #search > #search-input::-webkit-input-placeholder{
+    color: #777;
+}
+.navbar.watching{
     background-color: #000;
 }
-.navbar.typing > #search > span > #search-btn,
-.navbar.typing > #search > #search-input{
+.navbar.watching > #searchbar > #search > span > #search-btn,
+.navbar.watching > #searchbar > #search > #search-input{
     background-color: #444;
+    color: #fff;
+}
+.navbar.watching > #searchbar > #menu-btn > span,
+.navbar.watching > #searchbar > #search > span > #search-btn > .navbar-icon,
+.navbar.watching > #searchbar > #search > #search-input::-webkit-input-placeholder{
+    color: #fff;
 }
 
-#search-icon,
+
+.navbar-icon,
 #search-input::-webkit-input-placeholder
 {
     color: #fff;
@@ -68,11 +97,19 @@ a:hover{
     outline: none;
 }
 
+#menu-btn{
+    float: left;
+    margin-right: 6px;
+    background-color: rgba(0,0,0,0);
+    outline: none;
+}
+
 #content{
     margin: 50px auto auto auto;
 }
 
 #card-layout{
+    padding-top: 10px;
     width: 100%;
 }
 
@@ -124,13 +161,16 @@ a:hover{
     position: absolute;
     height: 70px;
     width: 70px;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0);
     border-width: 0px;
     z-index: 3000;
     top: calc(50% - 35px);
     transform: translateY(-50%);
     left: 50%;
     transform: translateX(-50%);
+    font-size: 40px;
+    color: #fff;
+    outline: none;
 }
 
 video{

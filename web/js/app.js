@@ -115,6 +115,14 @@ function search(search){
     });
 }
 
+function focus_search_input(){
+    $("div.navbar").addClass("typing");
+}
+
+function drop_search_input(){
+    $("div.navbar").removeClass("typing");
+}
+
 function create_videoplayer(source){
     video = $("video")[0];
 
@@ -210,7 +218,7 @@ function show_player(){
 
 function minimize_player(){
     if(should_video_play()){
-        $("div.navbar").removeClass("typing", 1000, "easeInBack");
+        $("div.navbar").removeClass("watching", 1000, "easeInBack");
         $("div#player-block").show();
         $("div#player-layout").addClass("media_player_minimized", 1000, "easeInBack");
     }
@@ -218,7 +226,7 @@ function minimize_player(){
 
 function maximize_player(){
     if(should_video_play()){
-        $("div.navbar").addClass("typing");
+        $("div.navbar").addClass("watching");
         $("div#player-block").show();
         $("div#player-layout").removeClass("media_player_minimized");
     }

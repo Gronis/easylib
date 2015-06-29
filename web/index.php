@@ -19,15 +19,22 @@
 </head>
     <body>
         <div class="navbar navbar-fixed-top">
-            <div class="input-group center" id = "search">
-                <input id="search-input" class="form-control" type="text" autocomplete="off" autofocus=""
-                       placeholder="Search" oninput="search(this.value)" onkeydown="if(event.keyCode == 13) this.oninput()"/>
-                <span class="input-group-btn">
-                    <button class="btn" id="search-btn" type="button"
-                            onclick="search(document.getElementById('search-input').value)">
-                        <span class="glyphicon glyphicon-search" id="search-icon"></span>
-                    </button>
-                </span>
+            <div id="searchbar">
+                <button class="btn" id="menu-btn" type="button">
+                    <span class="glyphicon glyphicon-align-justify navbar-icon"></span>
+                </button>
+                <div class="input-group center" id = "search">
+                    <input id="search-input" class="form-control" type="text" autocomplete="off" autofocus=""
+                           placeholder="Search" oninput="search(this.value)"
+                           onkeydown="if(event.keyCode == 13) this.oninput()"
+                           onfocus="focus_search_input()" onfocusout="drop_search_input()"/>
+                    <span class="input-group-btn">
+                        <button class="btn" id="search-btn" type="button"
+                                onclick="search(document.getElementById('search-input').value)">
+                            <span class="glyphicon glyphicon-search navbar-icon"></span>
+                        </button>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -87,7 +94,9 @@
             <div id="video-controls">
 
             </div>
-            <button id="video-play-pause-button" onclick='video_toggle_play_pause()'></button>
+            <button id="video-play-pause-button" onclick='video_toggle_play_pause()'>
+                <span class="glyphicon glyphicon-play"></span>
+            </button>
             <div id="media_player" class="center">
                 <video preload="auto" autoplay="autoplay" name="media" poster="{{poster}}">
 

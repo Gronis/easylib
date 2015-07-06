@@ -93,14 +93,13 @@ function video_duration_changed(){
     var slider_value = parseInt($("#video-duration-slider").val());
     var percent_new = slider_value * 100 / video_total_duration;
     var percent_old = video_current_duration() * 100 / video_total_duration;
-    if(percent_old + 2 > percent_new &&
-       percent_old - 2 < percent_new){
-        $("#video-duration-slider").blur();
-    }else{
+    if(!(percent_old + 2 > percent_new &&
+       percent_old - 2 < percent_new)){
         //start at time
         restart_stream(slider_value);
         console.log("Time changed: " + slider_value);
     }
+    $("#video-duration-slider").blur();
 }
 
 function search(search){

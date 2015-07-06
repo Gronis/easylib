@@ -105,7 +105,8 @@
                 <div id="video-controls">
                     <div id="video-current-duration-label">0:00</div>
                     <div id="video-duration-bar">
-                        <input id="video-duration-slider" type="range" step="any" min="0" max="100" value="0">
+                        <input id="video-duration-slider" type="range" step="any" min="0" max="100" value="0"
+                               onchange="video_duration_changed()">
                             <div id="video-duration-slider-level"></div>
                         </input>
                     </div>

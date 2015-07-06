@@ -89,6 +89,20 @@ $(window).scroll(function(event){
     lastScrollTop = st;
 });
 
+function video_duration_changed(){
+    var slider_value = parseInt($("#video-duration-slider").val());
+    var percent_new = slider_value * 100 / video_total_duration;
+    var percent_old = video_current_duration() * 100 / video_total_duration;
+    if(percent_old + 2 > percent_new &&
+       percent_old - 2 < percent_new){
+        $("#video-duration-slider").blur();
+    }else{
+        //start at time
+        restart_stream(slider_value);
+        console.log("Time changed: " + slider_value);
+    }
+}
+
 function search(search){
     console.log(search);
     minimize_player();
@@ -122,6 +136,7 @@ function search(search){
 
 function focus_search_input(){
     $("div.navbar").addClass("typing");
+    minimize_player();
 }
 
 function drop_search_input(){
@@ -163,9 +178,11 @@ function create_videoplayer(source){
             if(!video.paused){
                 stream_current_time = video.currentTime;
                 video_current_time = stream_current_time - stream_start_time;
-                $("#video-duration-slider").val(video_current_duration());
                 var percent = (video_current_duration() / video_total_duration * 100) + "%";
                 document.getElementById("video-duration-slider-level").style.width = percent;
+                if(!$("#video-duration-slider").is(":focus")){
+                    $("#video-duration-slider").val(video_current_duration());
+                }
                 console.log('updated, current time: ' + video_current_duration() + " percent: " + percent);
             }
         }, false);
@@ -305,6 +322,14 @@ function start_video(path, poster){
     maximize_player();
     console.log(scroll);
     $(document).scrollTop(scroll);
+}
+
+function restart_stream(duration){
+    if(duration != undefined){
+        video_start_time = duration;
+        video_current_time = 0;
+    }
+    start_stream(video_path, video_poster)
 }
 
 function start_stream(path, poster){

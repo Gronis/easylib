@@ -38,11 +38,28 @@ a:hover{
 #search-input{
     font-size: 18px;
     text-align: center;
-    background-color: #F06B63;
+    background-color: transparent;
     border-width: 0px;
     color: #fff;
     box-shadow: none;
     outline: none;
+}
+
+.navbar.watching{
+    background-color: #000;
+}
+.navbar.watching > #searchbar > #search > span > #search-btn,
+.navbar.watching > #searchbar > #search > #search-input{
+    background-color: #000;
+    color: #fff;
+}
+.navbar.watching > #searchbar > #search{
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+}
+.navbar.watching > #searchbar > #menu-btn > span,
+.navbar.watching > #searchbar > #search > span > #search-btn > .navbar-icon,
+.navbar.watching > #searchbar > #search > #search-input::-webkit-input-placeholder{
+    color: #fff;
 }
 
 .navbar.typing{
@@ -61,23 +78,6 @@ a:hover{
 .navbar.typing > #searchbar > #search > #search-input::-webkit-input-placeholder{
     color: #777;
 }
-.navbar.watching{
-    background-color: #000;
-}
-.navbar.watching > #searchbar > #search > span > #search-btn,
-.navbar.watching > #searchbar > #search > #search-input{
-    background-color: #555;
-    color: #fff;
-}
-.navbar.watching > #searchbar > #search{
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-}
-.navbar.watching > #searchbar > #menu-btn > span,
-.navbar.watching > #searchbar > #search > span > #search-btn > .navbar-icon,
-.navbar.watching > #searchbar > #search > #search-input::-webkit-input-placeholder{
-    color: #fff;
-}
-
 
 .navbar-icon,
 #search-input::-webkit-input-placeholder
@@ -96,7 +96,7 @@ a:hover{
 }
 
 #search-btn{
-    background-color: #F06B63;
+    background-color: transparent;
     outline: none;
 }
 
@@ -183,7 +183,8 @@ a:hover{
 #video-duration-slider{
     -webkit-appearance: none;
     height: 5px;
-    background-color: #999;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 #video-duration-slider-level{
@@ -192,6 +193,7 @@ a:hover{
     background-color: #E62117;
     position: absolute;
     bottom: 0px;
+    z-index: -1;
 }
 
 #video-duration-slider::-webkit-slider-thumb {
